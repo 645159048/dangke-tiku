@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#b42318">
+<title>党校考试刷题 · 20 套试卷</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#f6f4f1; --card:#ffffff; --ink:#1c1917; --ink2:#57534e; --muted:#8d8681;
+  --red:#b42318; --red-dark:#8c1a11; --red-soft:#fdf0ee;
+  --gold:#c8a24a; --green:#15803d; --green-soft:#effaf2; --green-line:#a8dfba;
+  --red-soft2:#fdf1ef; --red-line:#f3c6c0;
+  --line:#e9e4dc; --line2:#f1ede6;
+  --shadow:0 1px 2px rgba(28,25,23,.05),0 10px 26px -12px rgba(28,25,23,.16);
+  --radius:16px;
+}
+html,body{margin:0;padding:0}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:var(--bg); color:var(--ink); line-height:1.65;
+  -webkit-font-smoothing:antialiased; font-size:16px;
+}
+body::before{
+  content:""; position:fixed; inset:0; pointer-events:none; z-index:0;
+  background:
+    radial-gradient(900px 420px at 12% -12%, rgba(180,35,24,.10), transparent 60%),
+    radial-gradient(700px 380px at 96% 4%, rgba(200,162,74,.10), transparent 62%);
+}
+#app{position:relative; z-index:1; max-width:760px; margin:0 auto; padding:22px 18px 120px}
+.view{display:none; animation:fade .28s ease}
+.view.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ---------- brand / hero ---------- */
+.hero{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:20px}
+.brand{display:flex;align-items:center;gap:13px}
+.logo{
+  width:50px;height:50px;border-radius:15px;flex:0 0 auto;
+  background:linear-gradient(150deg,#c22a1c,#8c1a11 70%);
+  color:#fdf1d8;display:grid;place-items:center;font-size:23px;font-weight:700;
+  box-shadow:0 8px 18px -8px rgba(180,35,24,.75), inset 0 1px 0 rgba(255,255,255,.28);
+  letter-spacing:1px;
+}
+.brand h1{margin:0;font-size:21px;letter-spacing:.4px;font-weight:700}
+.brand p{margin:1px 0 0;font-size:12.5px;color:var(--muted);letter-spacing:.3px}
+.hero-badge{
+  font-size:11.5px;color:var(--red);background:var(--red-soft);
+  border:1px solid #f4d5d0; padding:5px 11px;border-radius:999px;white-space:nowrap;font-weight:600
+}
+
+/* ---------- stats ---------- */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:13px 12px;box-shadow:var(--shadow)}
+.stat b{display:block;font-size:22px;line-height:1.25;letter-spacing:.5px;font-variant-numeric:tabular-nums}
+.stat span{display:block;font-size:11.5px;color:var(--muted);margin-top:2px}
+.stat.accent b{color:var(--red)}
+
+/* ---------- buttons ---------- */
+.btn{
+  font:inherit;font-size:15px;border-radius:13px;border:1px solid transparent;cursor:pointer;
+  padding:13px 18px;transition:transform .12s ease,box-shadow .2s ease,background .2s ease,color .2s;
+  font-weight:600;display:inline-flex;align-items:center;justify-content:center;gap:8px;
+}
+.btn:active{transform:scale(.985)}
+.btn-primary{
+  background:linear-gradient(160deg,#c22a1c,#9a1a10);color:#fff;
+  box-shadow:0 10px 22px -12px rgba(180,35,24,.9), inset 0 1px 0 rgba(255,255,255,.18);
+}
+.btn-primary:hover{background:linear-gradient(160deg,#cb3121,#a51e13)}
+.btn-light{background:#fff;border-color:var(--line);color:var(--ink2)}
+.btn-light:hover{border-color:#d9d2c8;color:var(--ink)}
+.btn-block{width:100%;margin-top:14px}
+.btn-lg{padding:17px 20px;font-size:16.5px;border-radius:15px;width:100%}
+.btn:disabled{opacity:.45;cursor:not-allowed;transform:none!important;box-shadow:none}
+.link{background:none;border:none;color:var(--muted);font:inherit;font-size:12.5px;cursor:pointer;padding:4px}
+.link:hover{color:var(--red)}
+.icon-btn{
+  width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:#fff;
+  font-size:19px;line-height:1;cursor:pointer;color:var(--ink2);display:grid;place-items:center;flex:0 0 auto
+}
+.icon-btn:hover{color:var(--red);border-color:#e2c9c4}
+
+/* ---------- paper grid ---------- */
+.section-head{display:flex;align-items:baseline;justify-content:space-between;margin:26px 0 12px}
+.section-head h2{margin:0;font-size:15.5px;letter-spacing:.3px}
+.section-head .sub{font-size:12px;color:var(--muted)}
+.paper-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:10px}
+.paper-card{
+  position:relative;text-align:left;background:var(--card);border:1px solid var(--line);
+  border-radius:14px;padding:13px 13px 12px;cursor:pointer;font:inherit;color:inherit;
+  transition:transform .14s ease,border-color .2s,box-shadow .2s;box-shadow:var(--shadow);overflow:hidden
+}
+.paper-card:hover{transform:translateY(-2px);border-color:#e0cdc7}
+.paper-card .pid{display:block;font-size:15.5px;font-weight:700;letter-spacing:.6px;font-variant-numeric:tabular-nums}
+.paper-card .pmeta{display:block;font-size:11.5px;color:var(--muted);margin-top:3px}
+.paper-card .pmeta.done{color:var(--green);font-weight:600}
+.paper-card .pmeta.pass{color:var(--green);font-weight:600}
+.paper-card .pmeta.fail{color:var(--red);font-weight:600}
+.paper-card.done{border-color:#d9ead9;background:linear-gradient(180deg,#fff,#f8fdf9)}
+.paper-card .dot{
+  position:absolute;top:12px;right:12px;width:7px;height:7px;border-radius:50%;background:#ddd6cd
+}
+.paper-card.done .dot{background:#2f9e50}
+
+/* ---------- quiz ---------- */
+.topbar{display:flex;align-items:center;gap:9px;margin-bottom:14px}
+.tb-mid{flex:1;min-width:0}
+.tb-mid strong{display:block;font-size:14px;letter-spacing:.4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tb-mid span{display:block;font-size:11.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.topbar .btn{padding:9px 13px;font-size:13.5px;border-radius:11px}
+.progress{height:5px;background:#eae4db;border-radius:99px;overflow:hidden;margin-bottom:12px}
+.progress .bar{height:100%;width:0;background:linear-gradient(90deg,#c22a1c,#b42318);border-radius:99px;transition:width .3s ease}
+.qmeta{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;font-size:12.5px;color:var(--muted)}
+.tag{
+  background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px 11px;font-size:11.5px;
+  color:var(--ink2);font-weight:600;letter-spacing:.3px
+}
+.qcard{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px 20px;box-shadow:var(--shadow)}
+.stem{font-size:17px;line-height:1.85;letter-spacing:.2px;margin-bottom:6px}
+.stem .ul{
+  display:inline-block;min-width:70px;border-bottom:1.5px solid #b9b1a5;
+  margin:0 3px;height:1.05em;vertical-align:-2px
+}
+.opts{display:flex;flex-direction:column;gap:9px;margin-top:16px}
+.opt{
+  display:flex;align-items:flex-start;gap:12px;width:100%;text-align:left;font:inherit;
+  background:#fff;border:1.5px solid var(--line);border-radius:13px;padding:13px 15px;cursor:pointer;
+  transition:border-color .16s,background .16s,transform .1s;color:inherit;font-size:15.5px;line-height:1.6
+}
+.opt:hover{border-color:#ddd5c9;background:#fdfcfa}
+.opt:active{transform:scale(.995)}
+.opt .k{
+  flex:0 0 auto;width:25px;height:25px;border-radius:8px;background:#f4f0e9;color:var(--ink2);
+  display:grid;place-items:center;font-size:12.5px;font-weight:700;margin-top:1px;transition:.16s
+}
+.opt .t{flex:1}
+.opt.picked{border-color:var(--red);background:var(--red-soft)}
+.opt.picked .k{background:var(--red);color:#fff}
+.opt.correct{border-color:var(--green);background:var(--green-soft);border-width:1.5px}
+.opt.correct .k{background:var(--green);color:#fff}
+.opt.wrong{border-color:var(--red);background:var(--red-soft2)}
+.opt.wrong .k{background:var(--red);color:#fff}
+.opt.wrong .t{text-decoration:line-through;text-decoration-color:rgba(180,35,24,.45);text-decoration-thickness:1px}
+.opt[data-locked]{cursor:default}
+.opt[data-locked]:hover{transform:none}
+.opt[data-locked]:not(.correct):not(.wrong):not(.picked){opacity:.6}
+
+/* fill blanks */
+.blank{
+  display:inline-block;min-width:96px;padding:2px 12px;margin:0 2px;border-radius:8px;
+  border:1.5px dashed #d9a49d;background:#fff8f7;color:var(--red);font-size:14.5px;font-weight:600;
+  cursor:pointer;text-align:center;transition:.16s;line-height:1.5
+}
+.blank:hover{background:#fdeeea;border-color:var(--red)}
+.blank.on{
+  border-style:solid;border-color:var(--green);background:var(--green-soft);color:var(--green);
+  font-weight:700;min-width:auto;letter-spacing:.5px;cursor:default
+}
+.blank.under{border-color:#e6b9b3}
+.self{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:16px;padding-top:14px;border-top:1px dashed var(--line)}
+.self>span{font-size:13px;color:var(--muted)}
+.chip{
+  font:inherit;font-size:13px;font-weight:600;padding:7px 15px;border-radius:999px;cursor:pointer;
+  border:1.5px solid var(--line);background:#fff;color:var(--ink2);transition:.16s
+}
+.chip:hover{border-color:#d9d2c8}
+.chip.ok.active{background:var(--green-soft);border-color:var(--green);color:var(--green)}
+.chip.bad.active{background:var(--red-soft2);border-color:var(--red);color:var(--red)}
+
+.feedback{margin-top:12px}
+.fb{border-radius:13px;padding:13px 16px;font-size:14.5px;line-height:1.7;animation:pop .22s ease}
+@keyframes pop{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.fb.ok{background:var(--green-soft);border:1px solid var(--green-line);color:#14663a}
+.fb.bad{background:var(--red-soft2);border:1px solid var(--red-line);color:#8c1a11}
+.fb .ansline{display:block;margin-top:5px;font-size:13.5px;font-weight:600}
+.fb b{font-weight:700}
+.nav{display:flex;gap:10px;margin-top:16px}
+.nav .btn{flex:1}
+.pull{flex:1}
+
+/* ---------- sheet (question map) ---------- */
+.sheet{position:fixed;inset:0;z-index:50;display:flex;align-items:flex-end;justify-content:center}
+.sheet[hidden]{display:none}
+.sheet-bg{position:absolute;inset:0;background:rgba(28,25,23,.42);backdrop-filter:blur(2px);animation:fade .2s}
+.sheet-body{
+  position:relative;width:100%;max-width:760px;background:#fff;border-radius:22px 22px 0 0;
+  padding:18px 18px calc(24px + env(safe-area-inset-bottom));box-shadow:0 -12px 40px rgba(0,0,0,.2);
+  animation:up .26s cubic-bezier(.2,.8,.3,1)
+}
+@keyframes up{from{transform:translateY(30px);opacity:.4}to{transform:none;opacity:1}}
+.sheet-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.sheet-head strong{font-size:15.5px;letter-spacing:.4px}
+.legend{display:flex;gap:14px;font-size:11.5px;color:var(--muted);margin-bottom:12px;flex-wrap:wrap}
+.legend i{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:4px;vertical-align:0}
+.map{display:grid;grid-template-columns:repeat(auto-fill,minmax(46px,1fr));gap:7px;max-height:52vh;overflow:auto}
+.map button{
+  aspect-ratio:1.35;border-radius:9px;border:1px solid var(--line);background:#fbf9f6;
+  font:inherit;font-size:13px;font-weight:600;color:var(--ink2);cursor:pointer;transition:.14s;font-variant-numeric:tabular-nums
+}
+.map button.ok{background:var(--green-soft);border-color:var(--green-line);color:var(--green)}
+.map button.bad{background:var(--red-soft2);border-color:var(--red-line);color:var(--red)}
+.map button.cur{outline:2px solid var(--red);outline-offset:1px;background:#fff;color:var(--red)}
+.map button.todo{background:#f4f0e9}
+
+/* ---------- result ---------- */
+.result-hero{
+  background:var(--card);border:1px solid var(--line);border-radius:20px;padding:26px 20px 22px;
+  text-align:center;box-shadow:var(--shadow);margin-bottom:14px
+}
+.ring{width:158px;height:158px;border-radius:50%;margin:0 auto 14px;display:grid;place-items:center;position:relative}
+.ring::after{content:"";position:absolute;inset:9px;background:#fff;border-radius:50%}
+.ring-in{position:relative;z-index:1;text-align:center;line-height:1}
+.ring-in span{font-size:44px;font-weight:800;letter-spacing:-1px;font-variant-numeric:tabular-nums}
+.ring-in small{display:block;font-size:12px;color:var(--muted);margin-top:6px;letter-spacing:2px}
+.verdict{font-size:19px;font-weight:700;letter-spacing:1px;margin:2px 0 4px}
+.verdict.pass{color:var(--green)}
+.verdict.fail{color:var(--red)}
+.result-sub{font-size:13px;color:var(--muted)}
+.breakdown{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);margin-bottom:14px}
+.bd-row{display:flex;align-items:center;gap:12px;padding:13px 16px;border-bottom:1px solid var(--line2);font-size:14px}
+.bd-row:last-child{border-bottom:none}
+.bd-row .nm{width:64px;color:var(--ink2);font-size:13.5px}
+.bd-row .mini{flex:1;height:6px;background:#f1ede6;border-radius:99px;overflow:hidden}
+.bd-row .mini i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#c22a1c,#b42318)}
+.bd-row .sc{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.wrong-head{display:flex;align-items:center;justify-content:space-between;margin:22px 0 10px}
+.wrong-head h3{margin:0;font-size:15.5px}
+.wrong-list{display:flex;flex-direction:column;gap:10px}
+.wrong-item{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:15px 16px;box-shadow:var(--shadow)}
+.wrong-item .wi-top{display:flex;gap:8px;align-items:center;font-size:11.5px;color:var(--muted);margin-bottom:6px}
+.wrong-item .wi-no{font-weight:700;color:var(--red);font-variant-numeric:tabular-nums}
+.wrong-item .wi-stem{font-size:14.5px;line-height:1.75}
+.wrong-item .wi-opts{margin-top:8px;display:flex;flex-direction:column;gap:5px;font-size:13.5px;color:var(--ink2)}
+.wrong-item .wi-opts .c{color:var(--green);font-weight:600}
+.wrong-item .wi-opts .w{color:var(--red);text-decoration:line-through;text-decoration-thickness:1px}
+.wrong-item .wi-ans{
+  margin-top:10px;padding-top:10px;border-top:1px dashed var(--line);font-size:13.5px;
+  display:flex;gap:16px;flex-wrap:wrap
+}
+.wrong-item .wi-ans .lab{color:var(--muted);margin-right:4px}
+.wrong-item .wi-ans .ok{color:var(--green);font-weight:700}
+.wrong-item .wi-ans .no{color:var(--red);font-weight:700}
+.actions{display:flex;gap:10px;margin-top:18px}
+.actions .btn{flex:1}
+.hint{font-size:12.5px;color:var(--muted);text-align:center;margin:10px 0 0;line-height:1.7}
+.toast{
+  position:fixed;left:50%;bottom:34px;transform:translate(-50%,20px);z-index:99;
+  background:rgba(28,25,23,.92);color:#fff;padding:11px 20px;border-radius:999px;font-size:13.5px;
+  opacity:0;pointer-events:none;transition:.3s;box-shadow:0 12px 30px -10px rgba(0,0,0,.5);max-width:86vw
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+@media (max-width:420px){
+  #app{padding:16px 13px 110px}
+  .brand h1{font-size:19px}
+  .stat b{font-size:19px}
+  .qcard{padding:18px 15px}
+  .stem{font-size:16px}
+  .opt{font-size:15px;padding:12px 13px}
+}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- ================= HOME ================= -->
+  <section id="view-home" class="view active">
+    <div class="hero">
+      <div class="brand">
+        <div class="logo">党</div>
+        <div>
+          <h1>党校考试刷题</h1>
+          <p>20 套试卷 · 1200 道题 · 满分 100</p>
+        </div>
+      </div>
+      <span class="hero-badge">60 分及格</span>
+    </div>
+
+    <div class="stats" id="stats"></div>
+
+    <button class="btn btn-primary btn-lg" id="btn-random">
+      <span>🎲</span> 随机抽一套开始
+    </button>
+    <p class="hint" id="random-hint">优先抽取还没刷过的试卷</p>
+
+    <div class="section-head">
+      <h2>选择试卷</h2>
+      <button class="link" id="btn-reset">清空记录</button>
+    </div>
+    <div class="paper-grid" id="paper-grid"></div>
+  </section>
+
+  <!-- ================= QUIZ ================= -->
+  <section id="view-quiz" class="view">
+    <div class="topbar">
+      <button class="icon-btn" id="btn-exit" title="返回">←</button>
+      <div class="tb-mid">
+        <strong id="q-paper">试卷</strong>
+        <span id="q-timer">00:00 · 已答 0/60</span>
+      </div>
+      <button class="btn btn-light" id="btn-card">题卡</button>
+      <button class="btn btn-primary" id="btn-submit">交卷</button>
+    </div>
+    <div class="progress"><div class="bar" id="q-bar"></div></div>
+    <div class="qmeta">
+      <span class="tag" id="q-tag">填空题 · 1分</span>
+      <span id="q-pos">1 / 60</span>
+    </div>
+    <div class="qcard" id="qcard"></div>
+    <div class="feedback" id="feedback"></div>
+    <div class="nav">
+      <button class="btn btn-light" id="btn-prev">上一题</button>
+      <button class="btn btn-primary" id="btn-next">下一题</button>
+    </div>
+  </section>
+
+  <!-- ================= RESULT ================= -->
+  <section id="view-result" class="view">
+    <div id="result-hero"></div>
+    <div class="breakdown" id="breakdown"></div>
+    <div class="wrong-head"><h3 id="wrong-title">错题回顾</h3></div>
+    <div class="wrong-list" id="wrong-list"></div>
+    <div class="actions" id="result-actions"></div>
+    <p class="hint">成绩已自动保存，可在首页查看每套试卷的最好成绩</p>
+  </section>
+
+  <!-- ================= SHEET ================= -->
+  <div class="sheet" id="sheet" hidden>
+    <div class="sheet-bg" data-act="close-sheet"></div>
+    <div class="sheet-body">
+      <div class="sheet-head">
+        <strong>答题卡</strong>
+        <button class="link" data-act="close-sheet" style="font-size:13px">关闭</button>
+      </div>
+      <div class="legend">
+        <span><i style="background:#2f9e50"></i>答对</span>
+        <span><i style="background:#b42318"></i>答错</span>
+        <span><i style="background:#f4f0e9;border:1px solid #e9e4dc"></i>未作答</span>
+      </div>
+      <div class="map" id="map"></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+</div>
+
+<script>
+/* 题库数据：{p: 去重后的题目池 [[type,stem,options[],answer]...], a: [[卷号,[池下标...]]...]}
+   20 套试卷里有大量重复题（1200 题只有 424 道互不相同），去重后体积缩到 1/3，分享时加载更快。 */
+const __RAW = {"p":[["fill","__________应当带头参加所在党支部或者党小组组织生活。",[],"党员领导干部"],["fill","把用习近平新时代中国特色社会主义思想武装全党作为党员教育管理的__________，引导党员充分认识学习贯彻习近平新时代中国特色社会主义思想的重大意义，自觉学懂弄通做实。",[],"首要政治任务"],["fill","十九大报告指出， __________是发展的根本目的。",[],"增进民生福祉"],["fill","党员受到开除党籍处分， ___年内不得重新入党。",[],"五年"],["fill","有正式党员___以上的党支部，应当设立党支部委员会。党支部委员会由3至5人组成，一般不超过7人。",[],"7人"],["fill","党的共产主义最高理想，只有在__________充分发展和高度发达的基础上才能实现。",[],"社会主义社会"],["fill","__________是近代以来中华民族最伟大的梦想。",[],"实现中华民族伟大复"],["fill","社会主义初级阶段的根本任务是 __________。",[],"解放和发展生产力"],["fill","党支部的调整和撤销，一般由__________报所在乡镇（街道）或者单位基层党委批准，也可以由所在乡镇（街道）或者单位基层党委直接作出决定，并报上级党委组织部门备案。",[],"党支部"],["fill","党组织讨论决定问题，必须执行 __________的原则。",[],"少数服从多数"],["judge","我国是由工人阶级领导的、以工农联盟为基础的人民民主专政的社会主义国家。",["正确","错误"],"A"],["judge","崇高的理想和坚定的信念是青年大学生成才的关键",["正确","错误"],"A"],["judge","中国共产党的性质是中国工人阶级的先锋队，同时是中国人民和中华民族的先锋队，是中国特色社会主义事业的领导核心，代表中国先进生产力的发展要求，代表中国先进文化的前进方向，代表中国最广大人民的根本利益。",["正确","错误"],"A"],["judge","任何一个时代，青年都是社会上最富有朝气、最富有创造性、最富有生命力的群体，都担负着自身的历史使命。",["正确","错误"],"A"],["judge","党支部党员大会议题提交表决前，可以不讨论。",["正确","错误"],"B"],["judge","对与党组织失去联系12个月以上、通过各种方式查找仍然没有取得联系的党员，予以停止党籍。( )",["正确","错误"],"B"],["judge","预备党员的义务同正式党员一样。",["正确","错误"],"A"],["judge","实现\"两个一百年\"奋斗目标、实现中华民族伟大复兴的中国梦，不断提高人民生活水平，必须坚定不移把改革作为党执政兴国的第一要务，坚持解放和发展社会生产力，坚持社会主义市场经济改革方向，推动经济持续健康发展。",["正确","错误"],"B"],["judge","篡改、伪造个人档案资料的，给予严重警告处分;情节严重的，给予撤销党内职务或者留党察看处分",["正确","错误"],"A"],["judge","科学发展观的第一要义是科学。",["正确","错误"],"B"],["single","中国共产党第十九次全国代表大会，是在全面建成小康社会决胜阶段，中国特色社会主义进入_________的关键时期召开的一次十分重要的大会。",["新时期","新阶段","新征程","新时代"],"D"],["single","（）是中国共产党凝聚人心、汇聚力量的政治优势和战略方针，是夺取革命、建设、改革事业胜利的重要法宝。",["改革开放","实现共同富裕","统一战线","实现社会主义现代化"],"C"],["single","《中国共产党党员教育管理工作条例》自（ ）起施行。",["2019年4月5日","2019年5月6日","2019年5月7日","2019年6月5日"],"B"],["single","_______是我们党执政兴国的第一要务。",["发展","改革","反腐","革命"],"A"],["single","党员教育基本任务要进行革命传统教育，引导党员学习党史、国史、改革开放史、社会主义发展史和中华优秀传统文化，铭记党的奋斗历程，弘扬党的优良传统，传承()，践行共产党人价值观，激发爱国主义热情。",["蓝色基因","橙色基因","红色基因","黄色基因"],"C"],["single","各级党委留存的党费主要用于教育培训党员、支持基层党组织开展组织生活。加强对( )、民族地区、边疆地区、贫困地区党员教育管理工作经费支持。",["西部地区","北部地区","革命老区","集中地区"],"C"],["single","乡镇、街道、国有企业、高等学校等基层党委，按照规定配备一定数量的专兼职组织员，由（）党委组织部门进行业务指导和管理，承担指导督促发展党员和党员教育管理等工作。",["省","自治区","直辖市","县级以上"],"D"],["single","我国“四个全面”战略布局中不包括：_____",["全面建成小康社会","全面改革开放","全面依法治国","全面从严治党"],"B"],["single","党的中央委员会每届任期______年。",["2","3","4","5"],"D"],["single","坚持四项基本原则的核心是坚持__________。",["社会主义道路","人民民主专政","中国共产党的领导","马克思列宁主义毛泽东思想"],"C"],["single","党的()以来，以习近平同志为核心的党中央高度重视加强党员教育管理工作，推动形成全党从严从实抓党员教育管理的良好态势。",["十六大","十七大","十八大","十九大"],"A"],["single","党支部党员大会议题提交表决前，应当经过充分讨论。表决必须有（）以上有表决权的党员到会方可进行，赞成人数超过应到会有表决权的党员的（）为通过。",["三分之一","半数","三分之二","五分之一"],"A"],["single","申请入党的人，要有（）名正式党员作为介绍人",["1","2","3","4"],"B"],["single","“十三五”时期，我国经济发展的显著特征就是进入（ ）。",["新阶段","新形态","新常态","新业态"],"C"],["single","中国共产党第十八次全国代表大会，是在我国进入（）小康社会决定性阶段召开的一次十分重要的大会",["全面建设","全面建成","全面建立"],"B"],["single","党的十八大报告强调，我们坚定不移高举中国特色社会主义伟大旗帜，既不走封闭僵化的老路、也不走（）的邪路。",["资本主义","改旗易帜","改弦更张"],"B"],["single","中国共产党坚持独立自主的和平外交政策，坚持和平发展道路，坚持________的开放战略，统筹________两个大局，积极发展对外关系。",["互利共赢、国内国际","互惠互利、国内国际","互利共赢、内地外地"],"A"],["single","坚持中国共产党在统一战线中的_________是统一战线最根本的问题。",["主导地位","领导权","发言权"],"A"],["multi","对党员的纪律处分种类，包括（）",["警告","严重警告","撤销党内职务","留党察看"],"ABCD"],["multi","党组织应当加强党员教育管理，引导党员坚定共产主义远大理想和中国特色社会主义共同理想，增强____、坚定____、做到____，增强党性，提高素质，认真履行义务，正确行使权利，充分发挥先锋模范作用。",["“四个意识”","“两学一做”","“四个自信”","”两个维护”"],"ACD"],["multi","统一战线工作范围和对象是（）。",["民主党派成员；","无党派人士；","党外知识分子；","少数民族人士；"],"ABC"],["multi","党支部工作必须遵循（ ）项原则。",["坚持以马克思列宁主义、毛泽东思想等重要思想为指导，遵守党章，加强思想理论武装，坚定理想信念，不忘初心、牢记使命，始终保持先进性和纯洁性。","坚持把党的政治建设摆在首位","坚持践行党的宗旨和群众路线","坚持民主集中制"],"ABCD"],["multi","“三会一课”应当突出（ ）",["政治学习","政治意识","党性锻炼","政治教育"],"ACD"],["multi","统战部应当加强同政协组织的沟通协调配合，加强对民族、宗教工作部门和参事室、文史研究馆的工作指导，支持配合（）等工作部门做好相关工作。",["外事；","对台；","侨务；","港澳；"],"ABCD"],["multi","我国的“四个全面”战略布局包括：______",["全面建成小康社会","全面深化改革","全面依法治国","全面从严治党"],"ABCD"],["multi","党员必须履行下列义务（）。",["认真学习马克思列宁主义、毛泽东思想、邓小平理论 ；","自觉遵守党的纪律","切实开展批评和自我批评；","发扬社会主义新风尚，弘扬社会主义核心价值观 ；"],"ABCD"],["multi","新形势下，党面临的考验包括：____",["执政考验","改革开放考验","市场经济考验","外部环境考验"],"ABCD"],["multi","党员领导干部应当坚持更高标准、更严要求，全面学、系统学、贯通学、深入学、跟进学，自觉用以_____、_____、_____，发挥示范带动作用。",["理论宣讲","武装头脑","指导实践","推动工作"],"BCD"],["multi","改革开放以来我们取得一切成绩和进步的根本原因，归结起来就是___________。",["坚持党的基本路线","开辟了中国特色社会主义道路","形成了中国特色社会主义理论体系","坚持民主集中制"],"BC"],["multi","党的宗教工作基本方针是（）。",["全面贯彻党的宗教信仰自由政策；","依法管理宗教事务；","坚持独立自主自办原则；","积极引导宗教与社会主义社会相适应；"],"ABCD"],["multi","新时代我国社会主要矛盾是（ ），必须坚持（ ）的发展思想，不断促进（ ）。",["人民日益增长的美好生活需要和不平衡不充分的发展之间的矛盾","以人民为中心","人的全面发展和全体人民共同富裕","社会主义经济建设"],"ABC"],["multi","加强县级党校（行政学校）和基层党校建设。县级党校（行政学校）应当将党员集中培训作为重要任务，有计划地组织安排党员教育讲师到基层授课。注重发挥_______的作用。",["党群服务中心","基层党组织","党员干部教育培训基地","新时代文明实践中心"],"ABCD"],["multi","对于全面从严治党，（）是党自我净化、自我完善、自我革新、自我提高的根本途径，（）则是实现改革发展目标的根本保证，增强从严治党的系统性、预见性、创造性、实效性，锻造我们事业更加坚强的领导核心。",["改革；","经济建设；","政治建设；","党的领导；"],"AD"],["multi","中国共产党在新时期面临的三大历史任务为( ) 。",["发展生产力","推进现代化建设","完成祖国统一","维护世界和平与促进共同发展"],"BCD"],["multi","违反有关规定等，对直接责任者和领导责任者，情节较轻的，给予警告或者严重警告处分;情节较重的，给予撤销党内职务或者留党察看处分;情节严重的，给予开除党籍处分。",["自定薪酬","滥发津贴","滥发补贴","滥发奖金"],"ABCD"],["multi","健全人民当家作主制度体系，发展社会主义民主政治，必须要（）。",["坚持党的领导、人民当家作主、依法治国有机统一；","加强人民当家作主制度保障；","发挥社会主义协商民主重要作用；","简化机构和行政体制改革；"],"ABC"],["multi","《中国共产党党员教育管理工作条例》的制定和实施，对于________,实现党伟大执政使命，具有十分重要的意义。",["提高党员队伍建设质量","激发党组织的生机活力","推动全面从严治党向纵深发展","夯实党长期执政基础"],"ABCD"],["multi","党员应当主动学网用网，依托各类党员教育管理信息化平台，_______。",["积极参加在线学习培训","认真参加党组织的活动","做好教育培训、管理服务等工作","自觉接受党组织的教育管理"],"ABD"],["fill","预备党员违犯党纪，情节较重的，应当 __________。",[],"取消其预备党员资格"],["fill","党支部应当组织党员按期参加党员大会、党小组会和__________，定期召开党支部委员会会议。",[],"上党课"],["fill","为了坚持和加强党的全面领导，弘扬“支部建在连上”光荣传统，落实党要管党、全面从严治党要求，全面提升党支部组织力，强化党支部 __________，充分发挥党支部战斗堡垒作用，巩固党长期执政的组织基础，根据《中国共产党章程》和有关党内法规，制定本条例。",[],"政治功能"],["fill","对与党组织失去联系6个月以上、通过各种方式查找仍然没有取得联系的党员，予以__________ 。",[],"停止党籍"],["fill","上级党组织应当结合不同领域实际，突出__________，按照组织程序，采取多种方式，选拔符合条件的优秀党员担任党支部书记。",[],"政治标准"],["fill","乡镇、街道、国有企业、高等学校等基层党委，按照规定配备一定数量的专兼职组织员，由 __________党委组织部门进行业务指导和管理，承担指导督促发展党员和党员教育管理等工作。",[],"县级以上"],["fill","党支部副书记协助党支部书记开展工作。党支部其他委员按照__________开展工作。",[],"职责分工"],["fill","中国共产党最高理想和最终奋斗目标是 __________ 。",[],"实现共产主义"],["fill","十九大指出中国特色社会主义进入新时代，我国社会主要矛盾已经转化为_______________",[],"人民日益增长的美好生活需要和不平衡不充分的发展之间的矛盾"],["fill","民主评议党员可以结合 __________一并进行。",[],"组织生活会"],["judge","临时党支部一般不发展党员、处分处置党员，不收缴党费，不选举党代表大会代表和进行换届。",["正确","错误"],"A"],["judge","对缺乏革命意志，不履行党员义务，不符合党员条件，但本人能够正确认识错误、愿意接受教育管理并且决心改正的党员，党组织应当作出限期改正处置，限期改正时间不超过2年。对给予限期改正处置的党员应当采取帮助教育措施。（ ）",["正确","错误"],"B"],["judge","中国特色社会主义的本质要求和重要保障是全面深化改革。",["正确","错误"],"B"],["judge","中国共产党领导的多党合作和政治协商制度是我国的一项根本政治制度。中国共产党同各民主党派实行长期共存、互相监督、肝胆相照、荣辱与共的基本方针。",["正确","错误"],"B"],["judge","不履行党的义务，不符合党员条件的党员被劝告退党后坚持不退，不能讲其除名。",["正确","错误"],"A"],["judge","坚持党的基本路线不动摇，关键是坚持以经济建设中心不动摇",["正确","错误"],"A"],["judge","预备党员的预备期是从写入党志愿书当天算起。",["正确","错误"],"B"],["judge","党支部党员大会是党支部的议事决策机构，由主要党员参加，一般每季度召开1次。",["正确","错误"],"B"],["judge","预备党员的预备期一般为一年。",["正确","错误"],"A"],["judge","民族工作的根本要求是：坚定不移走中国特色解决民族问题的正确道路，坚持中国共产党的领导，坚持中国特色社会主义道路，坚持维护祖国统一，坚持各民族一律平等，坚持和完善民族区域自治制度。",["正确","错误"],"A"],["single","有正式党员（ ）人以上的党支部，应当设立党支部委员会。",["4","5","6","7"],"D"],["single","凡是有正式党员（ ）人以上的，都应当成立党支部。",["2","3","4","5"],"B"],["single","党员教育基本任务要求，要加强党的宗旨教育，引导党员践行()的根本宗旨，贯彻党的群众路线，提高群众工作本领，密切联系服务群众。",["维护最广大人民的根本利益","与群众保持密切联系","一切为了群众,一切依靠群众","全心全意为人民服务"],"D"],["single","基层党委履行抓党员教育管理的基本职责，推动落实上级党组织工作安排，组织做好党员（）、组织关系管理、表彰激励、关怀帮扶、组织处置、纪律处分等工作，指导所辖党支部做好党员日常教育管理工作。",["集中培训","学习培训","参与党内事务","教育管理"],"A"],["single","党员工作单位、经常居住地发生变动的，或者外出学习、工作、生活_____以上并且地点相对固定的，应该转移组织关系。",["1个月","3个月","6个月","1年"],"C"],["single","实现中华民族伟大复兴，就是中华民族近代以来最伟大的梦想，其本质是国家富强、民族振兴、（）",["人民幸福","共同富裕","全面小康","人民富裕"],"A"],["single","强化党内监督的核心是( )。",["坚持思想建党与制度治党相结合","坚持民主集中制","坚持党要管党、从严治党","坚持强化巡视监督"],"B"],["single","我们党作为执政党，面临的最大威胁就是（）",["脱离群众","能力不足","精神懈怠","腐败"],"D"],["single","目前使用的党章是________通过的。",["2012年11月14日","2017年1月1日","2017年10月18日","2017年10月24日"],"D"],["single","根据（ ）和有关党内法规，制定《中国共产党支部工作条例（试行）》。",["宪法","中国共产党章程","中国纪律处分条例","制度"],"B"],["single","十九大报告提出，新时代中国特色社会主义思想的总任务是（ ）",["全面建成小康社会","实现社会主义现代化和中华民族伟大复兴","建设社会主义法制化国家","实现社会主义现代化"],"B"],["single","新时代中国特色社会主义思想，明确中国特色社会主义最本质的特征是（ ）。",["“五位一体”总体布局","建设中国特色社会主义法治体系","人民利益为根本出发点","中国共产党领导"],"D"],["single","（）是我们党执政兴国的第一要务。",["发展","改革","反腐","革命"],"A"],["single","习近平总书记在庆祝中国共产党成立95周年大会上发表的重要讲话中强调，要坚持中国特色社会主义道路自信、理论自信、制度自信、（），坚持党的基本路线不动摇，不断把中国特色社会主义伟大事业推向前进",["民主自信","政治自信","文化自信","文明自信"],"C"],["single","加强( )法律法规教育，引导党员尊法学法守法用法。",["刑法","民法","宪法","行政法"],"C"],["single","从2020年到本世纪中叶的第一阶段奋斗目标是：（）",["初步实现社会主义现代化","基本实现社会主义现代化","全面实现社会主义现代化"],"B"],["single","各级党委主管统一战线工作的职能部门是_________。",["办公厅（室）","宣传部","统战部"],"C"],["single","“全面建设小康社会”是指_______。",["人民生活总体上达到小康水平","全面建设惠及十几亿人口的更高水平的小康社会","让先富的部分人员和部分地区更加富裕"],"B"],["single","坚持物质文明和精神文明两手抓，实行依法治国和_______相结合。",["以德治国","科教兴国","实力建国"],"A"],["single","党员的党龄，从_______之日算起。",["从递交入党志愿书","支部大会通过其为预备党员","预备期满转为正式党员"],"C"],["multi","党员廉洁自律规范包括：",["坚持公私分明，先公后私，克己奉公","坚持崇廉拒腐，清白做人，干净做事","坚持尚俭戒奢，艰苦朴素，勤俭节约","坚持吃苦在前，享受在后，甘于奉献"],"ABCD"],["multi","中国共产党要建设成为_______、_______、________马克思主义执政党。",["学习型","服务型","创新性","战斗型"],"ABC"],["multi","党小组组长（ ）产生",["党支部指定","群众推荐","所在党小组党员推荐","毛遂自荐"],"AC"],["multi","新形势下，党面临的危险包括：_____",["精神懈怠危险","能力不足危险","脱离群众危险","消极腐败危险"],"ABCD"],["multi","《党章》第四条规定，党员享有八项权利，下列哪些属于党员享有的权利?",["参加党的有关会议，阅读党的有关文件，接受党的教育和培训","在党的会议上和党报党刊上，参加关于党的政策问题的讨论","对党的工作提出建议和倡议","行使表决权、选举权，有被选举权"],"ABCD"],["multi","坚定文化自信，推动社会主义文化繁荣兴盛，要求我们党（）。",["放弃意识形态工作；","培育和践行社会主义核心价值观；","加强思想道德建设；","繁荣发展社会主义文艺；"],"BCD"],["multi","党员要加强党性锻炼，不断提高政治觉悟和政治能力，把()作为根本政治担当，永葆共产党人政治本色。",["对党忠诚；","为党分忧；","为党尽职；","为民造福；"],"ABCD"],["multi","《党章》第三十一条规定，党的基层组织对要求入党的积极分子进行教育和培养，做好经常性的发展党员工作，重视在__中发展党员。",["生产第一线","先进工作者","工作第一线","青年"],"AC"],["multi","基层党委履行抓党员教育管理的基本职责，推动落实上级党组织工作安排，组织做好党员集中培训、组织关系管理、_____________,纪律处分等工作，指导所辖党支部做好党员日常教育管理工作。( )",["表彰激励","关怀帮扶","指导督促","组织处置"],"ABD"],["multi","党小组会一般每月召开1次，组织党员（ ）等。",["政治学习","谈心谈话","开展批评","自我批评"],"ABCD"],["multi","对党员的纪律处分种类，包括",["警告","严重警告","撤销党内职务","留党察看"],"ABCD"],["multi","中国共产党第十九次全国代表大会同意把（ ）一道写入党章",["中国特色社会主义道路","中国特色社会主义理论体系","中国特色社会主义制度","中国特色社会主义文化"],"ABCD"],["multi","《党章》总纲中明确指出，中国共产党的性质是",["中国共产党是中国工人阶级的先锋队","是中国特色社会主义事业的领导核心","代表中国先进生产力的发展要求","代表中国先进文化的前进方向"],"ABCD"],["multi","中国共产党必须不断提高党的创造力、凝聚力、战斗力，建设（）的马克思主义执政党。",["学习型；","努力型；","服务型；","创新型；"],"ACD"],["multi","习近平新时代中国特色社会主义思想是对（）的继承和发展，是马克思主义中国化最新成果，是党和人民实践经验和集体智慧的结晶。",["马克思列宁主义；","毛泽东思想","邓小平理论；","“三个代表”重要思想；"],"ABCD"],["multi","《党章》总纲中明确指出，中国共产党的性质是()",["中国共产党是中国工人阶级的先锋队","是中国特色社会主义事业的领导核心","代表中国先进生产力的发展要求","代表中国先进文化的前进方向"],"ABCD"],["multi","支持民主党派和无党派人士参政的主要内容是：（）。",["参加国家政权；","监督人民代表大会；","参与国家事务的管理；","参与国家方针政策、法律法规的制定和执行；"],"ACD"],["multi","对劝其退党、_____________的，原则上不能恢复党籍，符合条件的可以重新入党。",["劝而不退出名","自行脱党除名","退党除名","开除党籍"],"ABCD"],["multi","组织党员读原著、学原文、悟原理，深入学习领会习近平新时代中国特色社会主义思想的___________，掌握贯穿其中的马克思主义立场观点方法，增强政治自觉、理论自信、情感融入。",["基本理论","核心要义","基本精神","实践要求"],"BCD"],["multi","基层党组织应当加强流动党员管理，对外出6个月以上并且没有转移组织关系的流动党员，应当做好哪些工作？ ( )",["保持经常联系","组织其参加组织生活或者教育培训","跟进做好教育培训","管理服务"],"ACD"],["fill","__________是中国特色社会主义的本质要求和重要保障。",[],"全面依法治国"],["fill","十九大明确全面推进依法治国总目标是建设中国特色社会主义法治体系、__________",[],"建设社会主义法治国家"],["fill","流动党员党支部，组织流动党员开展 __________，过好组织生活，进行民主评议，引导党员履行党员义务，行使党员权利，充分发挥作用。对组织关系不在本党支部的流动党员民主评议等情况，应当通报其组织关系所在党支部。",[],"政治学习"],["fill","对因私出国并在国外长期定居的党员，出国学习研究超过___年仍未返回的党员，一般予以停止党籍。停止党籍的决定由保留其组织关系的党组织按照有关规定作出。",[],"5"],["fill","新时代中国特色社会主义思想，明确中国特色社会主义最本质的特征是__________",[],"中国共产党领导"],["fill","党支部工作必须坚持把党的__________摆在首位，牢固树立“四个意识”，坚定“四个自信”，做到“四个服从”，旗帜鲜明讲政治，坚决维护习近平总书记党中央的核心、全党的核心地位，坚决维护党中央权威和集中统一领导。",[],"政治建设"],["fill","十九大强调的四个自信分别为坚定道路自信、理论自信、 __________、文化自信",[],"制度自信"],["fill","党支部委员会会议一般___召开1次，根据需要可以随时召开，对党支部重要工作进行讨论、作出决定等。",[],"每月"],["fill","党员领导干部应当定期为基层党员讲党课，党委（党组）书记,___至少讲1次党课。",[],"每年"],["fill","十九大指出，必须坚持以___为中心的发展思想，不断促进人的全面发展、全体人民共同富裕。",[],"人民"],["judge","发现党员有思想、工作、生活、作风和纪律方面苗头性倾向性问题的，以及群众对其有不良反映的，党组织负责人应当及时进行提醒谈话，抓早抓小、防微杜渐。( )",["正确","错误"],"A"],["judge","临时党支部主要组织党员开展政治学习，教育、管理、监督党员，对入党积极分子进行教育培养等，一般不发展党员、处分处置党员，不收缴党费，不选举党代表大会代表和进行换届。",["正确","错误"],"A"],["judge","非公有制经济组织、社会组织，一般从管理层中选任党支部书记，应当注重从业务骨干中选拔党支部书记。",["正确","错误"],"A"],["judge","抓党支部建设情况应当列入各级党委书记抓基层党建工作述职评议考核的重要内容，作为评判其履行管党治党政治责任情况的重要依据。",["正确","错误"],"A"],["judge","企业、农村、机关、学校、科研院所、社区、社会组织、人民解放军和武警部队连（中）队以及其他基层单位，凡是有正式党员2人以上的，都应当成立党支部。",["正确","错误"],"B"],["judge","为期3个月以上的工程、工作项目等，符合条件的，应当成立党支部。",["正确","错误"],"B"],["judge","村、社区党支部书记纳入县级党委组织部备案管理。",["正确","错误"],"A"],["judge","中央纪委国家监察机关主要负责党员纪律作风教育，指导开展党员监督，查处党员违犯党的纪律和职务违法、职务犯罪行为。( )",["正确","错误"],"B"],["judge","中国共产党在领导社会主义事业中，必须坚持以从严治党为中心。",["正确","错误"],"B"],["single","社会主义初级阶段基本路线的中心是__________。",["改革开放","经济建设","保持社会稳定","坚持走社会主义道路"],"B"],["single","党的基层委员会、总支部委员会、支部委员会每届任期（）",["一年至两年","两年至三年","三年至四年","三年至五年"],"D"],["single","把用习近平新时代中国特色社会主义思想武装全党作为党员教育管理的()，引导党员充分认识学习贯彻习近平新时代中国特色社会主义思想的重大意义，自觉学懂弄通做实。",["基本政治任务","首要政治任务","根本政治任务","主要政治任务"],"B"],["single","联合党支部覆盖单位一般不超过（ ）个。",["2","3","4","5"],"D"],["single","党员受到警告处分_______内，不得在党内提升职务和向党外组织推荐担任高于其原任职务的党外职务。",["六个月","一年","一年半","两年"],"B"],["single","新世纪新阶段统一战线具有空前的广泛性、巨大的包容性、鲜明的多样性和显著的（）",["政治性","时代性","复杂性","社会性"],"D"],["single","党员教育基本任务中，要突出()和政治训练，严格党内政治生活锻炼，教育党员旗帜鲜明讲政治，提高政治觉悟和政治能力，严守政治纪律和政治规矩，永葆共产党人政治本色。",["政治修养","政治教育","政治素养","政治规划"],"B"],["single","我国根本的政治制度是__________。",["政治协商制度","人民代表大会制度","多党合作制度","民主集中制"],"B"],["single","（）是共产党人精神上的“钙”。",["理想信念","政治觉悟","世界观和方法论","文化追求"],"A"],["single","（）是党的基础组织，是党组织开展工作的基本单元，是党在社会基层组织中的战斗堡垒，是党的全部工作和战斗力的基础。",["党小组","党支部","党总支","党委"],"C"],["single","习近平总书记“七一”重要讲话指出，在坚持马克思主义指导地位这一根本问题上，我们必须坚定不移，任何时候任何情况下都不能有丝毫动摇。同时，面对新的时代特点和实践要求，马克思主义也面临着进一步中国化、时代化、（ ）的问题。",["特色化","具体化","大众化","科学化"],"C"],["single","党员如果没有正当理由，连续_______不交纳党费，就被认为是自行脱党。",["三个月","半年","一年","两年"],"B"],["single","党支部书记应当具备良好政治素质，在党员、群众中有较高威信，一般应当具有（）年以上党龄。",["半","一","二","三"],"B"],["single","党员必须坚持党和人民利益高于一切，吃苦在前，享受在后，_______，多做贡献。",["克己奉公","廉洁自律","艰苦奋斗","艰苦创业"],"A"],["single","坚持中国共产党在统一战线中的（ ）是统一战线最根本的问题。",["主导地位","领导权","发言权"],"A"],["single","统一战线工作的根本任务是______________，为实现党和国家的宏伟目标而团结奋斗。",["凝聚人心、汇聚力量","大团结、大联合","为社会主义的经济、政治、文化服务"],"C"],["single","各级党委主管统一战线工作的职能部门是（ ）。",["办公厅（室）","宣传部","统战部"],"C"],["fill","党支部应当经常开展谈心谈话。党支部委员之间、党支部委员和党员之间、党员和党员之间，___谈心谈话一般不少于1次。谈心谈话应当坦诚相见、交流思想、交换意见、帮助提高。",[],"每年"],["fill","党支部召开党员大会，按照个人自评、__________、民主测评的程序，组织党员进行评议。党员人数较多的党支部，个人自评和党员互评可以在党小组范围内进行。党支部委员会会议或者党员大会根据评议情况和党员日常表现情况，提出评定意见。",[],"党员互评"],["fill","建立健全党支部__________提醒督促机制。根据党组织隶属关系和干部管理权限，上级党组织对任期届满的党支部，一般提前6个月以发函或者电话通知等形式，提醒做好换届准备。对需要延期或者提前换届的，应当认真审核、从严把关，延长或者提前期限一般不超过1年 。",[],"按期换届"],["fill","加强党的宗旨教育，引导党员践行__________的根本宗旨，贯彻党的群众路线，提高群众工作本领，密切联系服务群众。",[],"全心全意为人民服务"],["fill","党的十八大报告指出总布局是经济建设、政治建设、文化建设、社会建设、__________建设的五位一体。",[],"生态文明"],["fill","坚持党要管党、 __________，将严的要求落实到党员教育管理工作全过程和各方面，党员领导干部带头接受教育管理。",[],"全面从严治党"],["fill","中国共产党是以马克思列宁主义、毛泽东思想、邓小平理论、“三个代表”重要思想、科学发展观、 __________作为自己的行动指南。",[],"习近平新时代中国特色社会主义思想"],["fill","组织生活会应当确定 ___，会前认真学习，谈心谈话，听取意见；会上查摆问题，开展批评和自我批评，明确整改方向；会后制定整改措施，逐一整改落实。",[],"主题"],["fill","党的十八大中，首次将__________写进党的报告，是中国特色社会主义进一步走向成熟的标志之一。",[],"中国特色社会主义制度"],["fill","党支部工作必须坚持围绕中心、__________，充分发挥积极性主动性创造性，确保党的路线方针政策和决策部署贯彻落实。",[],"服务大局"],["judge","党员领导干部必须接受党内外群众的监督，普通党员则不必接受监督。",["正确","错误"],"B"],["judge","创新是引领发展的第一动力，是建设现代化经济体系的战略支撑。",["正确","错误"],"A"],["judge","对组织关系不在本党支部的流动党员民主评议等情况，应当通报其组织关系所在党支部。",["正确","错误"],"A"],["judge","党支部每年至少召开1次组织生活会，也可以根据工作需要随时召开，一般以党员大会、党支部委员会会议或者党小组会形式进行。（ ）",["正确","错误"],"A"],["judge","正式党员不足7人的党支部，设1名书记，必要时可以设1名副书记。",["正确","错误"],"A"],["judge","不忘本来才能开辟未来，善于继承才能更好创新。",["正确","错误"],"A"],["judge","民主评议党员跟组织生活会必须分开进行。",["正确","错误"],"B"],["judge","预备党员也可以作入党介绍人。",["正确","错误"],"B"],["judge","预备党员的预备期，从支部大会通过他为预备党员之日算起。",["正确","错误"],"A"],["judge","实现中华民族伟大复兴是近代以来中国是近代中华民族最伟大的梦想",["正确","错误"],"A"],["single","申请入党的人，要有____名正式党员作为介绍人。",["1","2","3","4"],"B"],["single","十八届六中全会认为党的十八大以来，党内政治生活展现新气象，为开创党和国家事业新局面提供了（）。",["重要保障","重要保证","根本保证","力量源泉"],"B"],["single","高校党组织对组织关系保留在学校的高校毕业生流动党员，应当继续履行管理职责。党员组织关系保留时间一般不超过（ ）年，对符合转出组织关系条件的及时转出。",["半年","1","2","3"],"C"],["single","党的（）专题研究依法治国问题，并作出我们党历史上第一个关于加强法治建设的专门决定，开启了法治建设新时代。",["十五届四中全会","十六届四中全会","十七届四中全会","十八届四中全会"],"D"],["single","从全面建成小康社会到基本实现现代化，再到全面建成（），是新时代中国特色社会主义发展的战略安排。",["创新型国家","社会主义现代化强国","社会主义现代化大国","世界一流强国"],"B"],["single","党支部党员人数一般不超过（ ）人。",["30","40","50","60"],"C"],["single","对出国（境）学习研究党员，由原就读高校或者工作单位党组织保留其组织关系，每半年至少与其联系( )次。出国（境）学习研究党员返回后按照规定恢复组织生活。",["1","2","3","4"],"A"],["single","以下哪一项不是统一战线工作范围和对象（ ）",["民主党派成员","少数民族人士","宗教界人士","外国友人"],"D"],["single","从（）到（），是“两个一百年”奋斗目标的历史交汇期。",["2020年 2035年","十九大 二十大","二十大 二十一大","2035年 本世纪中叶"],"B"],["single","建设中国特色社会主义，总布局是（）",["“四个全面”战略布局","“五位一体”总体布局","“一个中心、两个基本点”","“三步走”发展战略"],"B"],["single","党的__________都无权剥夺党员的权利。",["上级组织","党中央","任何一级组织直至中央","地方组织"],"C"],["single","掌握贯穿其中的()立场观点方法，增强政治自觉、理论自信、情感融入。建立以学习贯彻习近平新时代中国特色社会主义思想为中心内容的党员教育教材体系。",["三个代表","邓小平理论","马克思主义","科学发展观"],"C"],["single","十八届六中全会认为党要管党必须从（）管起。",["党员领导干部","个人重大事项报告","党内政治生活","中央政治局委员"],"C"],["single","开展形势政策教育，围绕贯彻执行党和国家重大决策、推进落实重大任务，宣讲党的路线方针政策，解读世情国情党情，回应党员关注的问题，引导党员正确认识形势，把（ ）和行动统一到党中央要求上来。",["思想","修养","素质","内涵"],"A"],["multi","预备党员的权利，除了没有以下哪些权利以外，也同正式党员一样：",["投票权","表决权","选举权","被选举权"],"BCD"],["multi","支持民主党派和无党派人士就经济社会发展重大问题进行考察调研，发挥其（）在方面的积极作用",["反映社情民意；","协调社会关系；","维护社会稳定；","维护宪法权威；"],"ABC"],["multi","我国成功走出了一条中国特色社会主义道路，实践证明我们的__、__、__是成功的。",["方针政策","道路","理论体系","制度"],"BCD"],["multi","对存在换届选举（ ）干扰渗透等问题的，上级党组织应当及时严肃处理。",["拉票贿选","宗族宗教","黑恶势力","任人唯亲"],"ABC"],["multi","党员具有下列情形之一的，按照规定程序给予除名处置。",["理想信念缺失，政治立场动摇，已经丧失党员条件的，予以除名；","信仰宗教，经党组织帮助教育仍没有转变的，劝其退党，劝而不退的予以除名；","因思想蜕化提出退党，经教育后仍然坚持退党的，予以除名；","为了达到个人目的以退党相要挟，经教育不改的，劝其退党，劝而不退的予以除名；"],"ABCD"],["multi","党员受到党纪处分后，不按照干部管理权限和组织关系对受处分党员开展日常__工作的，对直接责任者和领导责任者，情节较重的，给予警告或者严重警告处分;情节严重的，给予撤销党内职务或者留党察看处分。",["教育","管理","监督","培训"],"ABC"],["multi","加强对党外代表人士的管理，重点了解掌握其（），特别是在重大原则问题上的政治立场和态度。",["政治表现；","思想状况；","履行职责；","廉洁自律情况；"],"ABCD"],["multi","临时党支部（ ）由批准其成立的党组织指定。",["书记","副书记","委员","组长"],"ABC"],["multi","党员犯罪，有下列哪些情形的，应当给予开除党籍处分?",["被依法判处刑法规定的主刑(含宣告缓刑)的;","被单处或者附加剥夺政治权利的;","因过失犯罪，被依法判处三年以上(不含三年)有期徒刑的。","违纪情节轻微的"],"ABC"],["multi","党的全国代表大会的职权包括：",["听取和审查中央委员会的报告","审查中央纪律检查委员会的报告","讨论并决定党的重大问题","修改党的章程"],"ABCD"],["multi","______个人档案资料的，给予严重警告处分;情节严重的，给予撤销党内职务或者留党察看处分。",["篡改","伪造","报告","填写"],"AB"],["multi","党的四项基本原则是",["坚持社会主义道路","坚持人民民主专政","坚持中国共产党的领导","坚持马克思列宁主义毛泽东思想"],"ABCD"],["multi","中国特色社会主义文化是中国特色社会主义的（），是激励全党全国人民奋勇前进的（ ）",["重要组成部分","强大精神力量","基本理论","伟大支撑"],"AB"],["multi","中共十九大会的主题是（）。",["不忘初心，牢记使命；","高举中国特色社会主义伟大旗帜，决胜全面建成小康社会；","健全社会主义政治制度；","夺取新时代中国特色社会主义伟大胜利，为实现中华民族伟大复兴的中国梦不懈奋斗。"],"ABD"],["fill","党支部工作必须坚持以马克思列宁主义、毛泽东思想、邓小平理论、“三个代表”重要思想、科学发展观、__________为指导，遵守党章，加强思想理论武装，坚定理想信念，不忘初心、牢记使命，始终保持先进性和纯洁性。",[],"习近平新时代中国特色社会主义思想"],["fill","党支部委员会设书记和组织委员、宣传委员、__________等，必要时可以设1名副书记 。",[],"纪检委员"],["fill","党支部应当注重分析党员思想状况和心理状态。对家庭发生重大变故和出现重大困难、身心健康存在突出问题等情况的党员，党支部书记应当帮助做好__________；对受到处分处置以及有不良反映的党员，党支部书记应当有针对性地做好思想政治工作。",[],"心理疏导"],["fill","党支部召开党员大会，按照个人自评、__________、民主测评的程序，组织党员进行评议。",[],"党员互评"],["fill","党支部委员会会议须有半数以上委员到会方可进行。重要事项提交__________决定前，一般应当经党支部委员会会议讨论。",[],"党员大会"],["fill","十八届三中全会强调，__________、多种所有制经济共同发展的基本经济制度是中国特色社会主义制度的重要支柱，也是社会主义市场经济的根基。",[],"公有制为主体"],["fill","党支部每月相对固定 ___开展主题党日，组织党员集中学习、过组织生活、进行民主议事和志愿服务等。",[],"1天"],["fill","中国共产党领导的多党合作和政治协商制度是我国的一项 ___政治制度。",[],"基本"],["fill","高校党组织对组织关系保留在学校的高校毕业生流动党员，应当继续履行管理职责。党员组织关系保留时间一般不超过 ___年，对符合转出组织关系条件的及时转出。",[],"2"],["fill","党支部工作必须坚持践行党的宗旨和群众路线，组织引领党员、群众听党话、跟党走，成为党员、群众的 __________。",[],"主心骨"],["judge","党支部的成立，一般由基层单位提出申请，县委组织部召开会议研究决定并批复。",["正确","错误"],"B"],["judge","党支部委员之间、党支部委员和党员之间、党员和党员之间，每年谈心谈话一般不少于2次。",["正确","错误"],"B"],["judge","坚持党的领导,是党和国家的根本所在、命脉所在，是全国各族人民的利益所系、幸福所系",["正确","错误"],"A"],["judge","为了达到个人目的以退党相要挟，经教育不改的，劝其退党，劝而不退的予以除名。()",["正确","错误"],"A"],["judge","党员没有无义务的权利，但有无权利的义务。",["正确","错误"],"B"],["judge","领导干部手中的权力是人民赋予的，只能用来为人民谋利益。",["正确","错误"],"A"],["judge","村、社区重要事项以及与群众利益密切相关的事项，必须经过党支部党员大会讨论。",["正确","错误"],"A"],["judge","经济体制改革必须以完善产权制度和要素市场化配置为重点，实现产权有效激励、要素自由流动、价格反应灵活、竞争公平有序、企业优胜劣汰。",["正确","错误"],"A"],["judge","对出国（境）学习研究党员，由原就读高校或者工作单位党组织保留其组织关系，每半年至少与其联系1次。出国（境）学习研究党员返回后按照规定恢复组织生活。( )",["正确","错误"],"A"],["judge","党组织应当教育引导党员严格规范网络行为，敢于同网上错误言论作斗争，不得制作、发布、传播违反党的纪律规定和国家法律法规的信息内容。( )",["正确","错误"],"A"],["single","党章规定，申请入党的同志，必须年满_________岁。",["16","17","18","19"],"C"],["single","党支部书记每年应当至少参加（ ）次县级以上党组织举办的集中轮训。",["1","2","3","4"],"A"],["single","十八届六中全会认为办好中国的事情，关键在（）。",["企业","依法治国","党的建设","党"],"D"],["single","预备党员必须面向_______进行入党宣誓。",["党支部所有成员","党旗","党徽","支部书记"],"B"],["single","党组织讨论决定问题，必须执行_______原则。",["少数服从多数","成员服从领导","下级服从上级","个人服从集体"],"A"],["single","村、社区党支部委员会每届任期5年，其他基层单位党支部委员会一般每届任期（）年。",["2","3","4","5"],"B"],["single","坚持()相结合，依托党员教育管理信息化平台，开展党员信息管理、党组织活动指导管理、流动党员管理服务、发展党员管理和党费管理等业务应用，为党员提供在线学习培训、转接组织关系、参与党内事务和关怀帮扶等服务。",["线上和线下","网上和网下","中央和地方","总体和局部"],"B"],["single","党小组会一般（）召开1次，组织党员参加政治学习、谈心谈话、开展批评和自我批评等。",["一周","一月","三分之二","全部"],"B"],["single","党的支部委员会对申请入党的人，要注意征求党内外有关群众的意见，进行严格的审查，认为合格后直接提交_______讨论。",["上级党委","党支部大会","支部委员会","支部书记"],"B"],["single","全面依法治国，（）在于坚持党领导立法、保证执法、支持司法、带头守法。",["核心","关键","重点","前提"],"B"],["single","中国共产党党徽为镰刀和_______组成的图案。",["斧头","火炬","五星","锤子"],"D"],["single","新时期爱国统一战线的主体和基础是（）",["大陆范围内建设者和爱国者的联盟","大陆范围内全体劳动者、建设者和爱国者的联盟","大陆同台湾同胞，港澳同胞和海外侨胞的联盟","大陆范围内全体劳动者同台湾同胞和海外侨胞的联盟"],"B"],["single","中国特色社会主义进入新时代，我国社会主要矛盾已经转化为人民日益增长的（）需要和（）的发展之间的矛盾。（ ）",["美好生活 不充分不平衡","幸福生活 不平衡不充分","幸福生活 不充分不平衡","美好生活 不平衡不充分"],"D"],["single","在新世纪，（）作为党的一个重要法宝，绝不能丢掉；作为党的一个政治优势，绝不能削弱；作为党的一项长期方针，绝不能动摇。",["党的建设","统一战线","艰苦奋斗"],"B"],["multi","党员教育管理信息化，要坚持网上和网下相结合，依托党员教育管理信息化平台，开展________发展党员管理和党费管理等业务应用，为党员提供在线学习培训、转接组织关系、参与党内事务和关怀帮扶等服务。",["党员信息管理","党组织活动指导管理","流动党员管理服务","党员教育管理网站"],"ABC"],["multi","党组织在纪律审查中发现党员有贪污贿赂、失职渎职等刑法规定的行为涉嫌犯罪的，应当给予：",["撤销党内职务","留党察看","严重警告","开除党籍"],"ABD"],["multi","牢牢掌握意识形态工作领导权，要在以下（）方面努力。",["推进马克思主义中国化时代化大众化；","加强理论指导；","加快构建中国特色哲学社会科学；","高度重视传播手段建设和创新；"],"ABCD"],["multi","党的十八大以来，以习近平同志为核心的党中央在（）方面提出了一系列新理念新思想新方略。",["经济建设；","政治建设；","文化建设；","社会建设；"],"ABCD"],["multi","党的纪律主要包括：",["政治纪律、组织纪律","廉洁纪律、群众纪律","工作纪律、生活纪律","作风纪律、学习纪律"],"ABC"],["multi","党员在留党察看期间，没有以下哪些权利（）。",["表决权","言论自由权","选举权","被选举权"],"ACD"],["multi","地方各级党委和部门单位党组（党委）领导本地区本部门本单位党员教育管理工作，贯彻执行党中央关于党员教育管理工作的方针政策和部署要求，_____________,有针对性地提出工作措施。 ( )",["定期研究党员教育管理工作","分析党员队伍状况","组织编写全国党员教育基本教材","组织安排党员教育讲师到基层授课"],"AB"],["multi","加强党的宗旨教育，要引导党员___________，密切联系服务群众。( )",["践行全心全意为人民服务的根本宗旨","弘扬党的优良传统","贯彻党的群众路线","提高群众工作本领"],"ACD"],["multi","全面建设小康社会的含义是（）。",["人均国内生产总值达到8000美元","国内生产总值到2020年力争比2000年翻两番。","社会主义民主和法制更加完善，人民的权益得到切实尊重和保障","全民族的整体素质明显提高"],"BCD"],["multi","党的纪律主要包括政治纪律、（）、生活纪律。",["组织纪律；","廉洁纪律；","群众纪律；","工作纪律；"],"ABCD"],["multi","《党章》第三十四条规定，党的各级领导干部要加强道德修养，做到________，反对官僚主义，反对任何滥用职权、谋求私利的不正之风。",["自重","自省","自警","自励"],"ABCD"],["multi","有下列情形之一的，可以从轻或者减轻处分（）",["主动交代本人应当受到党纪处分的问题","检举同案人或者其他人应当受到党纪处分或者法律追究的问题，经查证属实的","主动挽回损失、消除不良影响或者有效阻止危害结果发生的","主动上交违纪所得的"],"ABCD"],["multi","习近平总书记在党的十九大报告提出了“四个伟大”，分别是指()",["伟大斗争；","伟大工程；","伟大事业；","伟大梦想；"],"ABCD"],["multi","党组织在纪律审查中发现党员有贪污贿赂、失职渎职等刑法规定的行为涉嫌犯罪的，应当给予（）。",["撤销党内职务","留党察看","严重警告","开除党籍"],"ABD"],["multi","坚持和发展中国特色社会主义总任务是（）和（）。",["进入社会主义中级阶段；","实现社会主义现代化；","中华民族伟大复兴；","促进共同富裕；"],"BC"],["multi","发现党员有思想、工作、生活、作风和纪律方面苗头性倾向性问题的，以及群众对其有不良反映的，党组织负责人应当及时进行( )",["对劝其退党","提醒谈话","抓早抓小","防微杜渐"],"BCD"],["multi","突出政治教育和政治训练，严格党内政治生活锻炼，教育党员旗帜鲜明讲政治，提高政治觉悟和政治能力，严守政治纪律和政治规矩，永葆共产党人政治本色，做到“四个服从”，在_____________,同以习近平同志为核心的党中央保持高度一致。",["思想上","政治上","生活上","行动上"],"ABD"],["multi","下列哪些情形应当从重或者加重处分?",["在纪律集中整饬过程中，不收敛、不收手的","强迫、唆使他人违纪的","本条例另有规定的","如实坦白交代的"],"ABC"],["multi","坚持全心全意为人民服务，必须坚持______。",["权为民所用","情为民所系","利为民所谋","心为民所系"],"ABC"],["multi","正式党员不足3人的单位，应当按照（ ）的原则，成立联合党支部。",["地域相邻","行业相近","规模适当","便于管理"],"ABCD"],["fill","党支部要做好思想政治工作和 __________。",[],"意识形态工作"],["fill","十九大中习主席指出，___是历史的创造者，是决定党和国家前途命运的根本力量。",[],"人民"],["fill","党小组会由 __________召集并主持。",[],"党小组组长"],["fill","__________，是对马克思列宁主义、毛泽东思想、邓小平理论、“三个代表”重要思想、科学发展观的继承和发展。",[],"习近平新时代中国特色社会主义思想"],["fill","党的先进性要靠__________来体现，加强党的先进性建设必须着力提高党员队伍素质建设。",[],"党员的先进性"],["fill","___是最根本的党内法规，是管党治党的总规矩。",[],"党章"],["fill","中国共产党的党旗和 ___是中国共产党的象征和标志。",[],"党徽"],["fill","坚持 __________和经常性教育相结合，组织培训和个人自学相结合，采取集中轮训、党委（党组）理论学习中心组学习、理论宣讲、组织生活、在线学习培训等方式，形成习近平新时代中国特色社会主义思想学习教育长效机制，推动党员学深悟透、入脑入心。",[],"集中教育"],["fill","中国共产党党徽为镰刀和 ___组成的图案。",[],"锤子"],["fill","正式党员不足7人的党支部，设1名 ___，必要时可以设1名副书记。",[],"书记"],["judge","任何党员不论职务高低，都不能个人决定重大问题。",["正确","错误"],"A"],["judge","乡镇、街道、国有企业、高等学校等基层党委，按照规定配备一定数量的专兼职组织员，由县级以上党委组织部门进行业务指导和管理，承担指导督促发展党员和党员教育管理等工作。（ ）",["正确","错误"],"A"],["judge","为执行某项任务临时组建的机构，党员组织关系不转接的，经上级党组织批准，可以成立临时党支部。",["正确","错误"],"A"],["judge","文化是一个国家、一个民族的灵魂，文化自信是一个国家、一个民族发展中更基本、更深远、更持久的力量。",["正确","错误"],"A"],["judge","坚持党的领导,是党和国家的根本所在、命脉所在，是全国各族人民的利益所系、幸福所系。",["正确","错误"],"A"],["judge","必须树立和践行绿水青山就是金山银山的理念，坚持节约资源和保护环境的基本国策，统筹山水林田湖草系统治理，实行最严格的生态环境保护制度，形成绿色发展方式和生活方式。",["正确","错误"],"A"],["judge","党小组组长由党支部指定，也可以由所在党小组党员推荐产生。",["正确","错误"],"A"],["judge","党员领导干部应当定期为基层党员讲党课，党委（党组）书记每年至少讲1次党课。",["正确","错误"],"A"],["judge","党的各级委员会实行集体领导和个人分工负责相结合的制度。凡属重大问题都要由党的委员会民主讨论，作出决定。",["正确","错误"],"A"],["judge","我国仍处于并将长期处于社会主义初级阶段的基本国情没有变，我国是世界最大发展中国家的国际地位没有变。",["正确","错误"],"A"],["single","以下那一项不是十九大的大会主题__________",["不忘初心，牢记使命","高举中国特色社会主义伟大旗帜","全面深化改革开放"],"C"],["single","党的十八大报告强调，全党必须更加自觉地把推动经济社会发展作为深入贯彻落实科学发展观的（ ）",["根本方法","核心立场","第一要义"],"C"],["single","统一战线工作的根本任务是（ ），为实现党和国家的宏伟目标而团结奋斗。",["凝聚人心、汇聚力量","大团结、大联合","为社会主义的经济、政治、文化服务"],"A"],["multi","流动党员较多，工作地或者居住地相对固定集中，应当由流出地党组织商流入地党组织，依托（）等成立流动党员党支部。",["社区","园区","商会","协会"],"BCD"],["multi","党的建设必须坚决实现的基本要求包括：______",["坚持党的基本路线","坚持解放思想，实事求是，与时俱进，求真务实","坚持全心全意为人民服务","坚持民主集中制"],"ABCD"],["multi","_______________是中国特色社会主义理论体系的精髓。",["解放思想","实事求是","与时俱进","求真务实"],"ABCD"],["multi","党支部应当严格执行党的组织生活制度，经常、认真、严肃地开展批评和自我批评，增强党内政治生活的（ ）。",["政治性","时代性","原则性","战斗性"],"ABCD"],["multi","党员享有下列哪些权利：",["参加党的会议","对党的工作提出建议和倡议","行使表决权、选举权，有被选举权","自觉遵守党的纪律"],"ABC"],["multi","中国共产党要领导全国各族人民实现“两个一百年”奋斗目标，“两个一百年”指的是：______。",["抗日战争胜利一百年","建党一百年","新中国成立一百年","改革开放一百年"],"BC"],["multi","党员在留党察看期间，没有以下哪些权利：",["表决权","言论自由权","选举权","被选举权"],"ACD"],["multi","县级以上党委管理的党费每年应当按照一定比例下拨到党支部，重点支持（）等开展党的活动。",["贫困村党支部","困难国有企业党支部","非公有制经济组织和社会组织党支部","流动党员党支部"],"ABCD"],["multi","临时党支部主要组织党员开展政治学习，（）党员，对入党积极分子进行教育培养等。",["教育","管理","监督","培养"],"ABC"],["multi","党支部应当组织党员按期参加（ ）",["党员大会","党小组会","党员培训","上党课"],"ABD"],["multi","注重知识技能教育，根据党员岗位职责要求和工作需要，组织引导党员学习____________等，帮助党员提高综合素质和履职能力，增强服务本领。( )",["党的创新理论","掌握业务知识","科技知识","实用技术"],"BCD"],["multi","全党同志要高举中国特色社会主义伟大旗帜，坚定（），贯彻党的基本理论、基本路线、基本方略",["道路自信","政治自信","理论自信","文化自信"],"ACD"],["multi","有下列情形之一的，可以从轻或者减轻处分：",["主动交代本人应当受到党纪处分的问题","检举同案人或者其他人应当受到党纪处分或者法律追究的问题，经查证属实的","主动挽回损失、消除不良影响或者有效阻止危害结果发生的","主动上交违纪所得的"],"ABCD"],["multi","文化软实力集中体现了一个国家基于文化而具有的___和___。",["创造力","软实力","凝聚力","生命力"],"CD"],["multi","以下哪些是构成新时代坚持和发展中国特色社会主义的基本方略",["坚持党对一切工作的领导。","坚持以人民为中心；","坚持全面深化改革。","坚持在社会主义核心价值体系；"],"ABCD"],["multi","党的纪律处分工作应当坚持以下原则：",["党要管党，从严治党","党纪面前一律平等","实事求是","民主集中制"],"ABCD"],["multi","要适应改革开放和社会主义现代化建设的要求，坚持________，加强和改善党的领导。",["科学执政","民主执政","依法执政","从严执政"],"ABC"],["multi","加强政治理论教育，突出党的创新理论学习，组织党员学习党的基本理论、_____、基本方略，_______，引导党员坚定理想信念，增强党性修养，努力掌握并自觉运用马克思主义立场观点方法。",["基本思想","基本路线","强化党章党规党纪教育","学习马克思主义基本原理和党的基本知识"],"BD"],["multi","党员廉洁自律规范包括（）。",["坚持公私分明，先公后私，克己奉公","坚持崇廉拒腐，清白做人，干净做事","坚持尚俭戒奢，艰苦朴素，勤俭节约","坚持吃苦在前，享受在后，甘于奉献"],"ABCD"],["fill","为执行某项任务临时组建的机构，党员组织关系不转接的，经上级党组织批准，可以成立 __________。",[],"临时党支部"],["fill","十九大报告提出，新时代中国特色社会主义思想的总任务是，__________，在全面建成小康社会的基础上分两步走，在本世纪中叶建成富强民主文明和谐美丽的社会主义现代化强国。",[],"实现社会主义现代化和中华民族伟大复兴"],["fill","留党察看最长不超过 ___年。",[],"两年"],["fill","中国共产党第十九次全国代表大会的主题是：__________，牢记使命,高举中国特色社会主义伟大旗帜，决胜全面建成小康社会，夺取新时代中国特色社会主义伟大胜利，为实现中华民族伟大复兴的中国梦不懈努力。",[],"不忘初心"],["fill","对有丧失党员条件的，严重败坏党的形象行为的，应当给予 __________处分。",[],"开除党籍"],["fill","发现党员有思想、工作、生活、作风和纪律方面苗头性倾向性问题的，以及群众对其有不良反映的，党组织负责人应当 __________，抓早抓小、防微杜渐。",[],"及时进行提醒谈话"],["fill","党支部工作必须坚持__________，发扬党内民主，尊重党员主体地位，严肃党的纪律，提高解决自身问题的能力，增强生机活力。",[],"民主集中制"],["fill","基层党委审批同意后，基层单位召开（ __________ ）选举产生党支部委员会或者不设委员会的党支部书记、副书记。批复和选举结果由基层党委报上级党委组织部门备案。",[],"党员大会"],["fill","党组织应当教育引导党员严格规范网络行为，敢于同网上错误言论作斗争，不得制作、发布、 ___ 违反党的纪律规定和国家法律法规的信息内容",[],"传播"],["fill","为期 __________以上的工程、工作项目等，符合条件的，应当成立党支部。",[],"6个月"],["judge","党支部应该每半年开展1次主题党日。（ ）",["正确","错误"],"B"],["judge","党支部书记、副书记一般由党支部党员大会选举产生。",["正确","错误"],"B"],["judge","党支部是党的基层组织，担负直接教育党员、管理党员、监督党员和组织群众、宣传群众、凝聚群众、服务群众的职责。",["正确","错误"],"A"],["judge","农业农村农民问题是关系国计民生的根本性问题，必须始终把解决好\"三农\"问题作为全党工作重中之重。",["正确","错误"],"A"],["judge","党员教育管理是党的建设基础性经常性工作。（ ）",["正确","错误"],"A"],["judge","坚持党的领导是人民当家作主和依法治国有机统一的根本保证，人民当家作主是社会主义民主政治的本质特征，依法治国是党领导人民治理国家的基本方式，三者统一于我国社会主义民主政治伟大实践",["正确","错误"],"A"],["judge","党员的党龄，从预备期满转为正式党员之日算起。",["正确","错误"],"A"],["judge","党的十八大将生态文明建设写入党章并作出阐述，使中国特色社会主义事业总体布局更加完善，有利于全面推进中国特色社会事业。",["正确","错误"],"A"],["judge","党的十九届一中全会选举习近平、李克强、栗战书、汪洋、王沪宁、赵乐际、韩正为中央政治局常委。",["正确","错误"],"A"],["judge","党的最高领导机关是党的全国代表大会和它所产生的中央委员会。",["正确","错误"],"A"],["single","对因私出国并在国外长期定居的党员，出国学习研究超过（）年仍未返回的党员，一般予以停止党籍。停止党籍的决定由保留其组织关系的党组织按照有关规定作出。",["4","5","6","7"],"B"],["single","在新世纪新时代，经济和社会发展的战略目标中包括，到建党一百年时，_________。",["基本实现小康","总体上建成小康社会","全面建成小康社会","全面建成社会主义现代化强国"],"C"],["single","党的十八大报告强调，我们在任何情况下都要牢牢把握社会主义初级阶段这个最大国情，推进任何方面的改革发展都要牢牢立足社会主义初级阶段这个（）",["根本判断","主要国情","最大实际"],"C"],["multi","弘扬理论联系实际的马克思主义学风，引导党员_____________学以致用、知行合一，提高政治站位，强化责任担当，增强过硬本领，做好本职工作，自觉做习近平新时代中国特色社会主义思想坚定信仰者和忠实实践者。( )",["把自己摆进去","把职责摆进去","把态度摆进去","把工作摆进去"],"ABD"],["multi","党员教育管理工作要遵循哪些原则？（ ）",["坚持党要管党、全面从严治党，将严的要求落实到党员教育管理工作全过程和各方面，党员领导干部带头接受教育管理；","坚持以党的政治建设为统领，突出党性教育和政治理论教育，引导党员遵守党章党规党纪，不忘初心、牢记使命；","坚持围绕中心、服务大局，注重党员教育管理质量和实效，保证党的理论和路线方针政策、党中央决策部署贯彻落实；","坚持从实际出发，加强分类指导，尊重党员主体地位，充分发挥党支部直接教育、管理、监督党员作用。"],"ABCD"],["multi","国家机关和国有企事业单位党组（党委）负责本领域、本单位党外知识分子工作，组织党外知识分子参加统一战线工作和活动。在党委统一领导下，坚持（）的方针，建立由统战部牵头、党政有关部门参加、社会有关团体参与的联席会议制度，做好新的社会阶层中的党外知识分子工作。",["充分尊重；","广泛联系；","加强团结；","热情帮助；"],"ABCD"],["fill","预备党员的预备期为 ___。",[],"一年"],["fill","入党积极分子要树立把 __________放在第一位利益观。",[],"党和人民群众的利益"],["fill","党支部要宣传和贯彻落实党的理论和路线方针政策，宣传和执行党中央、上级党组织及本党支部的决议。讨论决定或者参与决定本地区本部门本单位重要事项，充分发挥党员__________，团结组织群众，努力完成本地区本部门本单位所担负的任务。",[],"先锋模范作用"],["fill","上级党组织应当经常对党支部书记、副书记和其他委员进行 ___。",[],"培训"],["fill","理想信念缺失，政治立场动摇，已经丧失党员条件的， __________。",[],"予以除名"],["fill","根据事业发展和党的建设重点任务，结合本地区本部门本单位中心工作和党员实际，确定培训内容和方式。党员每年集中学习培训时间一般不少于 ___学时 。",[],"32"],["fill","党的 __________是党的根本建设，决定党的建设方向和效果。",[],"政治建设"],["fill","党的最高领导机关，是 __________和它所产生的中央委员会。",[],"党的全国代表大会"],["fill","党支部要密切联系群众，向群众宣传__________，经常了解群众对党员、党的工作的批评和意见，了解群众诉求，维护群众的正当权利和利益，做好群众的思想政治工作，凝聚广大群众的智慧和力量。",[],"党的政策"],["fill","发展党员，必须把 ___标准放在首位。",[],"政治"],["judge","根据党组织隶属关系和干部管理权限，上级党组织对任期届满的党支部，一般提前3个月以发函或者电话通知等形式，提醒做好换届准备。",["正确","错误"],"B"],["judge","党的纪律是铁的纪律，包含强制性、严肃性和统一性三个含义。",["正确","错误"],"A"],["judge","党员每年集中学习培训时间一般不少于32学时。（ ）",["正确","错误"],"A"],["judge","党员个人服从党的组织，少数服从多数，下级组织服从上级组织，全党各个组织和全体党员服从党的全国代表大会。",["正确","错误"],"B"],["judge","党支部应当组织党员按期参加党员大会、党小组会和上党课，随时召开党支部委员会会议。",["正确","错误"],"B"],["judge","党员如果没有正当理由，连续五个月不参加党的组织生活就被认为是自行脱党。",["正确","错误"],"B"],["judge","党员教育管理工作经费应当列入地方各级财政预算，结合实际按照党员数量划拨，重点保障农村、社区、非公有制经济组织和社会组织、公共就业和人才服务机构等基层党组织开展党员教育管理，形成稳定的经费保障机制。（ ）",["正确","错误"],"A"],["judge","党员如果没有正当理由，连续六个月不缴纳党费，就被认为是自行脱党。",["正确","错误"],"A"],["judge","党性和人民性从来都是一致的、统一的。",["正确","错误"],"A"],["judge","对停止党籍的党员，符合条件的，可以按照规定程序恢复党籍。对劝其退党、劝而不退除名、自行脱党除名、退党除名、开除党籍的，永远不能入党。( )",["正确","错误"],"B"],["single","十九大报告中指出，统一战线是党的事业取得胜利的重要法宝，要坚持___________统一。",["同一性和多样性","一致性和多样性","独立性和一致性","共性和个性"],"B"],["single","我们要坚持以（）为重点，坚持社会主义市场经济改革方向，全面深化经济体制、政治体制、文化体制、社会体制、生态文明体制和党的建设制度改革。",["经济体制改革","政治体制改革","社会体制改革","党的建设制度改革"],"A"],["single","党的全国代表大会每_____年举行一次。",["2","3","4","5"],"D"],["single","对党员不按照规定参加党的组织生活、不按时交纳党费、流动到外地工作生活不与党组织主动保持联系的，以及存在其他与党的要求不相符合的行为、()，党组织应当采取适当方式及时进行批评教育，帮助其改进提高。",["情节严重的","情节较严重的","情节较轻的","情节轻微的"],"C"],["single","2016年4月24日至26日，习近平总书记视察安徽并发表重要讲话，对安徽发展提出了明确要求，省委概括为“一大目标”和“五大任务”，这是习近平总书记赋予安徽的重大历史使命。其中，“一大目标”是（ ）。",["中部崛起中闯出新路","发扬敢为人先的精神","转型升级中弯道超车","改革创新中脱颖而出"],"A"],["single","村、社区重要事项以及与群众利益密切相关的事项，必须经过（ ）讨论。",["所有群众","党支部领导干部","党支部党员","乡镇（街道）主要领导"],"C"],["single","我国政府解决民族问题采取的一项基本政策是_____。",["民族自治制度","少数民族自治制度","民族区域自治制度","少数民族区域自治制度"],"C"],["single","党支部党员大会是党支部的议事决策机构，由全体党员参加，一般（ ）召开1次。",["一个月","一季度","半年","一年"],"B"],["single","党支部党员大会、党支部委员会会议由（ ）召集并主持。",["书记","副书记","委员","党小组组长"],"A"],["single","党的基层委员会、总支部委员会、支部委员会每届任期_________",["一年至两年","两年至三年","三年至四年","三年至五年"],"D"],["single","党组织应当按照党中央部署要求，组织党员认真参加党内集中学习教育，引导党员围绕（ ）主题，深入学习党的创新理论，查找解决自身存在的突出问题。",["政治教育","学习教育","思想教育","文化教育"],"B"],["single","预备党员可以延长预备期，但不能超过_______.",["半年","一年","两年","三年"],"B"],["single","中国的参政党数量是_______",["1","3","8","9"],"C"],["single","中国特色社会主义，既坚持了科学社会主义基本原则，又根据时代特征赋予其鲜明的（）。",["国际特色","实践特色","中国特色","时代特色"],"C"],["fill","党的各级代表大会的代表受到留党察看以上（含留党察看）处分的，应当__________。",[],"终止其代表资格"],["fill","党的十八大以来，中央反复强调 __________是决定当代中国命运的关键一招。",[],"改革开放"],["fill","严重触犯刑律的党员必须 __________。",[],"开除党籍"],["fill","十八大提出建设中国特色社会主义的八大要求，其中摆在第一位的基本要求是__________",[],"坚持人民主体地位"],["fill","党支部是党的基础组织，是党组织开展工作的基本单元，是党在社会基层组织中的战斗堡垒，是党的全部工作和战斗力的基础，担负直接教育党员、管理党员、__________ 和组织群众、宣传群众、凝聚群众、服务群众的职责。",[],"监督党员"],["fill","___是党执政兴国的第一要务。",[],"发展"],["fill","党支部委员会由党支部__________选举产生，党支部书记、副书记一般由党支部委员会会议选举产生，不设委员会的党支部书记、副书记由党支部党员大会选举产生。",[],"党员大会"],["fill","十九大强调中国特色社会主义事业总体布局是“五位一体”，战略布局是“__________”。",[],"四个全面"],["fill","“三会一课”应当突出__________，突出党性锻炼，以“两学一做”为主要内容，结合党员思想和工作实际，确定主题和具体方式，做到形式多样、氛围庄重。",[],"政治学习和教育"],["fill","党支部应当运用“ __________”制度，对党员进行经常性的教育管理。党员应当按期参加党员大会、党小组会和上党课，进行学习交流，汇报思想、工作等情况。党员领导干部应当参加双重组织生活。",[],"三会一课"],["judge","党组织不得无故拒转拒接党员组织关系。",["正确","错误"],"A"],["judge","党支部委员会会议必须每月召开1次，不能根据需要随时召开",["正确","错误"],"B"],["judge","党员组织关系保留时间一般不超过2年，对符合转出组织关系条件的及时转出。()",["正确","错误"],"A"],["judge","培育和弘扬社会主义核心价值观，不一定要突出道德价值的作用。",["正确","错误"],"B"],["judge","对要求入党的积极分子进行教育和培养，做好经常性的发展党员工作，发现、培养和推荐党员中的优秀人才。",["正确","错误"],"B"],["judge","民主集中制是有党的性质和其所肩负的伟大的历史使命决定的。",["正确","错误"],"A"],["judge","人民身体健康并非全面建成小康社会的重要内涵。",["正确","错误"],"B"],["judge","自预备党员转正之日起，即取得党籍。（）",["正确","错误"],"B"],["judge","党小组会一般每月召开1次，组织党员参加政治学习、谈心谈话、开展批评和自我批评等。",["正确","错误"],"A"],["judge","保持香港、澳门长期繁荣稳定，实现祖国完全统一，是实现中华民族伟大复兴的必然要求。",["正确","错误"],"A"],["single","强化党章党规党纪教育，引导党员牢记（），坚持合格党员标准，自觉遵守党的纪律，带头践行社会主义核心价值观，培养高尚道德情操，培育良好思想作风、学风、工作作风、生活作风和家风。加强宪法法律法规教育，引导党员尊法学法守法用法。",["入党誓词","党规","党宗旨","党任务"],"A"],["single","_______是促进人类社会向前发展的最终决定性因素",["生产关系","生产力","生产要素","生产方式"],"B"],["fill","停止党籍2年后确实无法取得联系的，按照 __________予以除名。",[],"自行脱党"],["fill","党支部书记主持党支部__________,督促党支部其他委员履行职责、发挥作用，抓好党支部委员会自身建设，向党支部委员会、党员大会和上级党组织报告工作。",[],"全面工作"],["fill","党支部一般每年开展1次民主评议党员，组织党员对照合格党员标准、对照入党誓词，联系个人实际进行 ___分析。",[],"党性"],["fill","《中国共产党党员教育管理工作条例》以（ __________）为指导，以党章为根本遵循，总结吸收实践创新成果，对党员教育管理的内容、方式、程序等作出规范，是新时代党员教育管理工作的基本遵循。",[],"习近平新时代中国特色社会主义思想"],["fill","对党支部书记、副书记和其他委员的培训应当突出党的基本理论、基本政策、基本知识及党务工作基本要求，党的优良传统和作风，党规党纪等内容。注重发挥优秀党支部书记 __________作用。",[],"传帮带"],["fill","对经党组织同意可以不转接组织关系的党员，所在单位党组织可以将其纳入一个党支部或者党小组，参加 __________。",[],"组织生活"],["fill","对年老体弱、行动不便、身患重病甚至失能的党员，组织活动和开展学习教育不作硬性要求，党组织通过 __________、走访慰问等方式，给予更多关心照顾。",[],"送学上门"],["fill","党支部书记每年应当向上级党组织和党支部党员大会___，接受评议考核，考核结果作为评先评优、选拔使用的重要依据。",[],"述职"],["fill","十八届五中全会指出，到__________年全面建成小康社会，为实现第二个百年奋斗目标、实现中华民族伟大复兴的中国梦奠定更加坚实的基础。",[],"2020"],["fill","十九大明确全面深化改革总目标是完善和发展__________、推进国家治理体系和治理能力现代化。",[],"中国特色社会主义制度"],["judge","对经党组织同意可以不转接组织关系的党员，所在单位党组织可以将其纳入一个党支部或者党小组，参加组织生活。",["正确","错误"],"A"],["judge","联合党支部覆盖单位一般不超过5个。",["正确","错误"],"A"],["judge","党的文化建设是党的根本性建设，决定党的建设方向和效果。",["正确","错误"],"B"],["judge","中共十九大，于2017年10月18日上午9:00在人民大会堂举行。",["正确","错误"],"A"],["judge","预备党员预备期满，均可以按时转为正式党员。",["正确","错误"],"B"],["judge","弘扬理论联系实际的马克思主义学风，引导党员把自己摆进去、把职责摆进去、把工作摆进去，学以致用、知行合一，提高政治站位，强化责任担当，增强过硬本领，做好本职工作，自觉做习近平新时代中国特色社会主义思想坚定信仰者和忠实实践者。（）",["正确","错误"],"A"],["judge","根据工作需要，上级党委可以直接作出在基层单位成立党支部的决定。",["正确","错误"],"A"],["judge","从十九大到二十大，是“两个一百年”奋斗目标的历史交汇期。",["正确","错误"],"A"],["judge","对因党员人数或者所在单位、区域等发生变化，不再符合设立条件的党支部，上级党组织应当随后予以调整或者撤销。",["正确","错误"],"B"],["fill","凡是有正式党员 ___人_以上的，都应当成立党支部。",[],"3"],["fill","中国共产党党徽为 ___和锤子组成的图案。",[],"镰刀"],["fill","党支部党员人数一般不超过 ___人。",[],"50"],["fill","中国共产党根本宗旨是 __________。",[],"全心全意为人民服务"],["fill","__________是党的各级组织和全体党员必须遵守的行为规则。",[],"党的纪律"],["fill","党支部书记应当具备良好政治素质，热爱党的工作，具有一定的政策理论水平、组织协调能力和群众工作本领，敢于担当、乐于奉献，带头发挥先锋模范作用，在党员、群众中有较高威信，一般应当具有 ___以上党龄。",[],"1年"],["fill","违反党章和其他党内法规规定，采取弄虚作假或者其他手段把不符合党员条件的人发展为党员，或者为非党员出具党员身份证明的，对直接责任者和领导责任者给予警告或者严重警告处分；情节严重的，给予 __________处分。",[],"撤销党内职务"],["fill","党支部___至少召开1次组织生活会，一般安排在第四季度，也可以根据工作需要随时召开。组织生活会一般以党支部党员大会、党支部委员会会议或者党小组会形式召开。",[],"每年"],["fill","党支部的成立，一般由基层单位提出申请，所在乡镇（街道）或者单位基层党委召开会议研究决定并批复，批复时间一般不超过（ __________ ） 。",[],"1个月"],["fill","根据工作需要，（ __________） 可以直接作出在基层单位成立党支部的决定。",[],"上级党委"],["judge","社会主义核心价值观是当代中国精神的集中体现，凝结着全体人民共同的价值追求.",["正确","错误"],"A"],["judge","我国社会主义政治制度优越性的一个突出特点，就是坚持党总揽全局、协调各方的领导核心地位",["正确","错误"],"A"],["judge","党员是党的基础组织",["正确","错误"],"B"],["judge","解放思想、实事求是、与时俱进，是马克思主义活的灵魂，是我们适应新形势、认识新事物、完成新任务的根本思想武器。",["正确","错误"],"A"],["judge","党的处分包括分为警告、严重警告、留党察看、开除党籍。",["正确","错误"],"B"],["judge","党员经过留党察看，坚持错误不改的，应当严重警告。",["正确","错误"],"B"],["judge","对因私出国并在国外长期定居的党员，出国学习研究超过5年仍未返回的党员，一般予以停止党籍。停止党籍的决定由保留其组织关系的党组织按照有关规定作出。( )",["正确","错误"],"A"],["judge","预备党员不履行党员义务，不具备党员条件的，应当取消预备党员资格。",["正确","错误"],"A"],["judge","统一战线，是指中国共产党领导的、以工农联盟为基础的，包括全体社会主义劳动者、社会主义事业建设者、拥护社会主义爱国者、拥护祖国统一和致力于中华民族伟大复兴爱国者的联盟。",["正确","错误"],"A"],["judge","党章规定，党的最高领导机关是党的全国代表大会。",["正确","错误"],"B"],["fill","__________是党内的最高处分",[],"开除党籍"],["fill","实行党员教育__________，县级以上党委从优秀党校教师、基层党组织书记、先进模范人物、党务工作者、专家学者、实用技术人才、离退休干部等人员中选聘党员教育讲师。",[],"讲师聘任制"],["fill","预备党员违犯党纪，情节较轻，可以保留预备党员资格的，党组织应当对其批评教育或者 __________。",[],"延长预备期"],["fill","对组织关系转出但尚未被接收的党员，原所在党组织 __________。",[],"仍然负有管理责任"],["fill","党支部应当严格执行党的组织生活制度，经常、认真、严肃地开展__________，增强党内政治生活的政治性、时代性、原则性、战斗性。",[],"批评和自我批评"]],"a":[["010",[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,21,23,24,25,26,27,28,29,30,31,32,33,34,35,36,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57]],["011",[58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117]],["01",[118,119,120,121,122,123,124,125,126,127,77,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,29,151,152,153,34,35,52,53,54,55,56,57,98,99,100,101,102,103,104,105,106,107,108,109,110,111]],["02",[154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,144,181,182,183,184,185,186,187,36,36,37,93,94,112,113,114,115,116,117,188,189,190,191,192,193,194,195,196,197,198,199,200,201]],["03",[202,203,204,205,206,207,208,209,210,211,212,213,214,215,216,217,218,219,220,221,222,223,224,225,226,227,228,229,230,231,232,233,234,20,21,95,96,97,235,96,236,237,238,239,240,241,242,243,244,245,246,247,248,249,250,251,252,253,254,255]],["04",[256,257,258,259,260,261,262,263,264,265,266,267,268,269,270,271,272,273,274,275,22,21,23,24,25,26,27,28,29,30,31,32,33,78,79,276,36,277,97,278,279,280,281,282,283,284,285,286,287,288,289,290,291,292,199,293,294,295,296,297]],["05",[298,299,300,301,302,303,304,305,306,307,308,309,310,311,312,313,314,315,316,317,80,81,82,83,84,85,86,87,88,89,90,91,92,318,319,320,151,152,153,34,321,322,323,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54]],["06",[324,325,326,327,328,329,330,331,332,333,334,335,336,337,338,339,340,341,342,343,319,344,345,346,347,348,349,350,351,352,353,354,355,356,357,35,36,36,37,93,55,56,57,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114]],["07",[358,359,360,361,362,363,364,365,366,367,368,369,370,371,372,373,374,375,376,377,378,379,137,138,139,140,141,142,143,144,145,146,147,148,149,94,95,96,97,235,115,116,117,188,189,190,191,192,193,194,195,196,197,198,199,200,201,236,237,238]],["08",[380,381,382,383,384,385,386,387,388,389,390,391,392,393,394,395,396,371,397,398,150,29,174,175,176,177,178,179,180,144,181,182,183,184,185,96,276,36,277,97,239,240,241,242,243,244,245,246,247,248,249,250,251,252,253,254,255,279,280,281]],["09",[399,400,401,402,403,404,405,406,407,408,409,410,411,412,413,414,415,416,417,418,186,187,222,223,224,225,226,227,228,229,230,231,232,233,234,278,320,151,152,153,282,283,284,285,286,287,288,289,290,291,292,199,293,294,295,296,297,321,322,323]],["12",[419,420,421,422,423,118,119,120,121,122,128,129,130,131,132,133,134,135,136,164,318,319,319,344,345,346,347,348,349,350,351,352,353,354,355,235,96,276,36,277,188,189,190,191,192,193,194,195,196,197,198,199,200,201,236,237,238,239,240,241]],["13",[123,124,125,126,127,154,155,156,157,158,165,166,167,168,169,170,171,172,173,212,356,357,378,379,137,138,139,140,141,142,143,144,145,146,147,97,278,320,151,152,242,243,244,245,246,247,248,249,250,251,252,253,254,255,279,280,281,282,283,284]],["14",[159,160,161,162,163,202,203,204,205,206,213,214,215,216,217,218,219,220,221,266,148,149,150,29,174,175,176,177,178,179,180,144,181,182,183,153,34,35,36,36,285,286,287,288,289,290,291,292,199,293,294,295,296,297,321,322,323,38,39,40]],["15",[207,208,209,210,211,256,257,258,259,260,267,268,269,270,271,272,273,274,275,308,184,185,186,187,222,223,224,225,226,227,228,229,230,231,232,37,93,94,95,96,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,98,99,100]],["16",[261,262,263,264,265,298,299,300,301,302,309,310,311,312,313,314,315,316,317,334,233,234,20,21,22,21,23,24,25,26,27,28,29,30,31,97,235,96,276,36,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,188,189,190]],["17",[303,304,305,306,307,324,325,326,327,328,335,336,337,338,339,340,341,342,343,368,32,33,78,79,80,81,82,83,84,85,86,87,88,89,90,277,97,278,320,151,191,192,193,194,195,196,197,198,199,200,201,236,237,238,239,240,241,242,243,244]],["18",[329,330,331,332,333,358,359,360,361,362,369,370,371,372,373,374,375,376,377,390,91,92,318,319,319,344,345,346,347,348,349,350,351,352,353,152,153,34,35,36,245,246,247,248,249,250,251,252,253,254,255,279,280,281,282,283,284,285,286,287]],["19",[363,364,365,366,367,380,381,382,383,384,391,392,393,394,395,396,371,397,398,409,354,355,356,357,378,379,137,138,139,140,141,142,143,144,145,36,37,93,94,95,288,289,290,291,292,199,293,294,295,296,297,321,322,323,38,39,40,41,42,43]],["20",[385,386,387,388,389,399,400,401,402,403,410,411,412,413,414,415,416,417,418,10,146,147,148,149,150,29,174,175,176,177,178,179,180,144,181,96,97,235,96,276,44,45,46,47,48,49,50,51,52,53,54,55,56,57,98,99,100,101,102,103]]]};
+const BANK = (function(){
+  var pool = __RAW.p, papers = [];
+  __RAW.a.forEach(function(row){
+    var qs = row[1].map(function(ix, i){
+      var it = pool[ix];
+      return { no: i + 1, type: it[0], stem: it[1], options: it[2], answer: it[3] };
+    });
+    papers.push({ id: row[0], questions: qs });
+  });
+  return { papers: papers };
+})();
+</script>
+<script>
+"use strict";
+/* ============ 常量 ============ */
+var TYPE = {
+  fill:   { name: '填空题', pts: 1, total: 10 },
+  judge:  { name: '判断题', pts: 1, total: 10 },
+  single: { name: '单选题', pts: 2, total: 20 },
+  multi:  { name: '多选题', pts: 2, total: 20 }
+};
+var PASS = 60;
+var LS_KEY = 'dxkt_v1';
+
+/* ============ 工具 ============ */
+function el(id){ return document.getElementById(id); }
+function esc(s){
+  return String(s == null ? '' : s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;');
+}
+function fmtTime(sec){
+  sec = Math.max(0, Math.floor(sec));
+  var m = Math.floor(sec/60), s = sec%60;
+  return (m<10?'0':'')+m+':'+(s<10?'0':'')+s;
+}
+function letter(i){ return 'ABCD'.charAt(i); }
+function sortLetters(s){ return String(s||'').split('').sort().join(''); }
+
+var toastTimer = null;
+function toast(msg){
+  var t = el('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function(){ t.classList.remove('show'); }, 1900);
+}
+
+/* ============ 存储 ============ */
+var STORE = loadStore();
+function loadStore(){
+  try {
+    var raw = localStorage.getItem(LS_KEY);
+    if (!raw) return { records:{}, progress:{} };
+    var o = JSON.parse(raw);
+    if (!o || typeof o !== 'object') return { records:{}, progress:{} };
+    o.records = o.records || {};
+    o.progress = o.progress || {};
+    return o;
+  } catch(e){ return { records:{}, progress:{} }; }
+}
+function saveStore(){
+  try { localStorage.setItem(LS_KEY, JSON.stringify(STORE)); } catch(e){}
+}
+
+/* ============ 数据索引 ============ */
+var PAPERS = BANK.papers.slice().sort(function(a,b){ return a.id.localeCompare(b.id); });
+var BY_ID = {};
+PAPERS.forEach(function(p){ BY_ID[p.id] = p; });
+
+/* ============ 运行态 ============ */
+var S = null;      // 当前答题会话
+var timerId = null;
+
+/* ============ 首页 ============ */
+function showView(name){
+  ['home','quiz','result'].forEach(function(v){
+    el('view-'+v).classList.toggle('active', v === name);
+  });
+  window.scrollTo(0, 0);
+}
+
+function renderHome(){
+  var done = 0, passed = 0, sum = 0, cnt = 0, best = 0;
+  PAPERS.forEach(function(p){
+    var r = STORE.records[p.id];
+    if (r){ done++; sum += r.last || 0; cnt++; if ((r.best||0) >= PASS) passed++; best = Math.max(best, r.best||0); }
+  });
+  var avg = cnt ? Math.round(sum/cnt) : 0;
+  el('stats').innerHTML =
+    '<div class="stat accent"><b>'+done+'<span style="font-size:13px;color:#8d8681">/20</span></b><span>已刷试卷</span></div>' +
+    '<div class="stat"><b>'+avg+'</b><span>平均分</span></div>' +
+    '<div class="stat"><b>'+passed+'</b><span>及格套数</span></div>';
+
+  var grid = '';
+  PAPERS.forEach(function(p){
+    var r = STORE.records[p.id];
+    var pr = STORE.progress[p.id];
+    var cls = 'paper-card' + (r ? ' done' : '');
+    var meta = '<span class="pmeta">未开始 · 60 题</span>';
+    if (r){
+      var pass = (r.last||0) >= PASS;
+      var times = (r.attempts||1) > 1 ? ' · 第'+(r.attempts||1)+'次' : '';
+      meta = '<span class="pmeta '+(pass?'pass':'fail')+'">'+(pass?'及格':'未及格')+' '+(r.last||0)+' 分 · 最好 '+(r.best||0)+times+'</span>';
+    } else if (pr && pr.answers && Object.keys(pr.answers).length){
+      meta = '<span class="pmeta">继续作答 · 已答 '+Object.keys(pr.answers).length+' 题</span>';
+    }
+    grid += '<button class="'+cls+'" data-paper="'+p.id+'">' +
+              '<span class="dot"></span>' +
+              '<span class="pid">试卷 '+p.id+'</span>' + meta +
+            '</button>';
+  });
+  el('paper-grid').innerHTML = grid;
+
+  var un = PAPERS.filter(function(p){ return !STORE.records[p.id]; }).length;
+  el('random-hint').textContent = un > 0
+    ? '还有 '+un+' 套试卷没刷过 · 优先抽取未刷过的'
+    : '20 套全部刷过啦 · 将优先抽取练习次数最少的';
+}
+
+function pickRandom(excludeId){
+  var pool = PAPERS.filter(function(p){ return p.id !== excludeId; });
+  var fresh = pool.filter(function(p){ return !STORE.records[p.id]; });
+  if (fresh.length){
+    return fresh[Math.floor(Math.random()*fresh.length)].id;
+  }
+  var min = Infinity;
+  pool.forEach(function(p){
+    var r = STORE.records[p.id];
+    var n = r ? (r.attempts||1) : 0;
+    if (n < min) min = n;
+  });
+  var least = pool.filter(function(p){
+    var r = STORE.records[p.id];
+    return (r ? (r.attempts||1) : 0) === min;
+  });
+  if (!least.length) return null;
+  return least[Math.floor(Math.random()*least.length)].id;
+}
+
+/* ============ 开始 / 恢复 ============ */
+function startPaper(id, forceFresh){
+  var paper = BY_ID[id];
+  if (!paper) return;
+  S = {
+    id: id,
+    paper: paper,
+    idx: 0,
+    answers: {},
+    t0: Date.now(),
+    elapsed: 0,
+    submitted: false,
+    result: null
+  };
+  var pr = STORE.progress[id];
+  if (pr && pr.answers && !forceFresh){
+    S.answers = pr.answers;
+    S.idx = Math.min(pr.idx || 0, paper.questions.length-1);
+    S.elapsed = pr.elapsed || 0;
+    S.t0 = Date.now() - S.elapsed*1000;
+    toast('已恢复上次作答进度');
+  } else {
+    delete STORE.progress[id];
+    saveStore();
+  }
+  showView('quiz');
+  renderQuiz();
+  startTimer();
+}
+
+function startTimer(){
+  stopTimer();
+  timerId = setInterval(function(){
+    if (!S || S.submitted) return;
+    S.elapsed = Math.floor((Date.now() - S.t0)/1000);
+    var answered = countAnswered();
+    el('q-timer').textContent = fmtTime(S.elapsed) + ' · 已答 ' + answered + '/' + S.paper.questions.length;
+  }, 500);
+  el('q-timer').textContent = fmtTime(S.elapsed) + ' · 已答 ' + countAnswered() + '/' + S.paper.questions.length;
+}
+function stopTimer(){ if (timerId){ clearInterval(timerId); timerId = null; } }
+
+function countAnswered(){
+  if (!S) return 0;
+  var n = 0;
+  S.paper.questions.forEach(function(q){
+    var a = S.answers[q.no];
+    if (!a) return;
+    if (q.type === 'fill'){ if (a.revealed) n++; }
+    else if (a.judged) n++;
+  });
+  return n;
+}
+
+function saveProgress(){
+  if (!S || S.submitted) return;
+  S.elapsed = Math.floor((Date.now() - S.t0)/1000);
+  STORE.progress[S.id] = { idx:S.idx, answers:S.answers, elapsed:S.elapsed };
+  saveStore();
+}
+
+/* ============ 渲染题目 ============ */
+function curQ(){ return S.paper.questions[S.idx]; }
+
+function isAnswered(q){
+  var a = S.answers[q.no];
+  if (!a) return false;
+  return q.type === 'fill' ? !!a.revealed : !!a.judged;
+}
+
+function renderStem(text){
+  // 题干中的下划线空位：填空用可点击空，其它题型用普通下划线
+  return esc(text).replace(/[_＿]{2,}/g, '<span class="ul"></span>');
+}
+
+function renderQuiz(){
+  var q = curQ();
+  var a = S.answers[q.no] || {};
+  var meta = TYPE[q.type];
+  var total = S.paper.questions.length;
+
+  el('q-paper').textContent = '试卷 ' + S.paper.id;
+  el('q-tag').textContent = meta.name + ' · ' + meta.pts + ' 分/题';
+  el('q-pos').textContent = (S.idx+1) + ' / ' + total;
+  el('q-bar').style.width = ((S.idx+1)/total*100) + '%';
+  el('q-timer').textContent = fmtTime(S.elapsed) + ' · 已答 ' + countAnswered() + '/' + total;
+  el('btn-prev').disabled = (S.idx === 0);
+  el('btn-next').textContent = (S.idx === total-1) ? '完成并交卷' : '下一题';
+
+  var html = '';
+  if (q.type === 'fill'){
+    var stem = esc(q.stem).replace(/[_＿]{2,}/g, function(){
+      if (a.revealed){
+        return '<span class="blank on">' + esc(q.answer) + '</span>';
+      }
+      return '<span class="blank" data-act="reveal">点击出答案</span>';
+    });
+    html = '<div class="stem">' + stem + '</div>';
+    if (a.revealed){
+      var okSelf = a.self !== false;
+      html += '<div class="self"><span>这题我：</span>' +
+        '<button class="chip ok' + (okSelf?' active':'') + '" data-act="self-ok">记住了 +1</button>' +
+        '<button class="chip bad' + (!okSelf?' active':'') + '" data-act="self-bad">忘了</button>' +
+      '</div>';
+    }
+  } else {
+    html = '<div class="stem">' + renderStem(q.stem) + '</div><div class="opts">';
+    q.options.forEach(function(text, i){
+      html += optionHtml(q, a, i, text);
+    });
+    html += '</div>';
+    if (q.type === 'multi' && !a.judged){
+      var n = (a.picked || []).length;
+      html += '<button class="btn btn-primary btn-block" id="btn-confirm"' + (n ? '' : ' disabled') + '>确认答案' + (n ? '（已选 '+n+' 项）' : '（至少选 2 项）') + '</button>';
+    }
+  }
+  el('qcard').innerHTML = html;
+
+  // 反馈区：只有「错」才显示答案；填空显示自评提示
+  var fb = '';
+  if (q.type === 'fill'){
+    if (a.revealed){
+      fb = '<div class="fb ok">答案已显示：<b>' + esc(q.answer) + '</b>' +
+           '<span class="ansline" style="color:#57534e;font-weight:400">点一下空自动出答案 · 自评是否记住</span></div>';
+    }
+  } else if (a.judged){
+    if (a.correct){
+      fb = '<div class="fb ok">✓ 回答正确　<b>+' + TYPE[q.type].pts + '</b> 分</div>';
+    } else {
+      fb = '<div class="fb bad">✗ 回答错误　正确答案：<b>' + answerText(q) + '</b>' +
+           '<span class="ansline" style="color:#57534e;font-weight:400">你的答案：' + userText(q, a) + '</span></div>';
+    }
+  }
+  el('feedback').innerHTML = fb;
+  saveProgress();
+}
+
+function optionHtml(q, a, i, text){
+  var key = letter(i);
+  var correctKeys = String(q.answer || '').split('');
+  var picked = (a.picked || []).indexOf(key) >= 0;
+  var cls = 'opt';
+  if (a.judged){
+    if (a.correct){
+      if (picked) cls += ' correct';      // 答对时不暴露其它正确答案
+    } else {
+      if (correctKeys.indexOf(key) >= 0) cls += ' correct';
+      if (picked && correctKeys.indexOf(key) < 0) cls += ' wrong';
+      if (picked) cls += ' picked';
+    }
+  } else if (picked){
+    cls += ' picked';
+  }
+  return '<button class="' + cls + '" data-act="pick" data-key="' + key + '"' +
+         (a.judged ? ' data-locked="1"' : '') + '>' +
+           '<span class="k">' + key + '</span><span class="t">' + esc(text) + '</span>' +
+         '</button>';
+}
+
+function answerText(q){
+  if (q.type === 'fill') return q.answer;
+  var keys = String(q.answer || '').split('');
+  var texts = keys.map(function(k){
+    var i = k.charCodeAt(0) - 65;
+    return k + (q.options[i] ? '. ' + q.options[i] : '');
+  });
+  return texts.join('　');
+}
+
+function userText(q, a){
+  if (q.type === 'fill') return a.revealed ? '已查看答案' : '未作答';
+  if (!a.picked || !a.picked.length) return '未作答';
+  return a.picked.slice().sort().join('、');
+}
+
+/* ============ 交互 ============ */
+function pickOption(key){
+  var q = curQ();
+  if (q.type === 'fill') return;
+  var a = S.answers[q.no];
+  if (a && a.judged) return;
+
+  if (q.type === 'multi'){
+    a = a || { picked: [] };
+    a.picked = a.picked || [];
+    var i = a.picked.indexOf(key);
+    if (i >= 0) a.picked.splice(i, 1); else a.picked.push(key);
+    a.picked.sort();
+    S.answers[q.no] = a;
+    renderQuiz();
+    return;
+  }
+
+  // 单选 / 判断：选了立即判分
+  a = a || {};
+  a.picked = [key];
+  a.judged = true;
+  a.correct = (key === String(q.answer).charAt(0));
+  S.answers[q.no] = a;
+  renderQuiz();
+}
+
+function confirmMulti(){
+  var q = curQ();
+  var a = S.answers[q.no];
+  if (!a || a.judged || !a.picked || !a.picked.length) return;
+  a.judged = true;
+  a.correct = (sortLetters(a.picked.join('')) === sortLetters(q.answer));
+  renderQuiz();
+}
+
+function revealBlank(){
+  var q = curQ();
+  var a = S.answers[q.no] || {};
+  a.revealed = true;
+  if (a.self === undefined) a.self = true;
+  S.answers[q.no] = a;
+  renderQuiz();
+}
+
+function setSelf(ok){
+  var q = curQ();
+  var a = S.answers[q.no] || {};
+  a.revealed = true;
+  a.self = !!ok;
+  S.answers[q.no] = a;
+  renderQuiz();
+}
+
+function go(delta){
+  var total = S.paper.questions.length;
+  var next = S.idx + delta;
+  if (next < 0) return;
+  if (next >= total){
+    if (delta > 0) submit();
+    return;
+  }
+  S.idx = next;
+  renderQuiz();
+}
+
+/* ============ 交卷 ============ */
+function grade(){
+  var byType = { fill:{ok:0,n:0,pts:0}, judge:{ok:0,n:0,pts:0}, single:{ok:0,n:0,pts:0}, multi:{ok:0,n:0,pts:0} };
+  var score = 0, wrong = [];
+  S.paper.questions.forEach(function(q){
+    var a = S.answers[q.no] || {};
+    var ok = false;
+    if (q.type === 'fill'){
+      ok = !!a.revealed && a.self !== false;
+    } else {
+      ok = !!a.judged && !!a.correct;
+    }
+    var pts = TYPE[q.type].pts;
+    byType[q.type].n++;
+    if (ok){
+      byType[q.type].ok++;
+      byType[q.type].pts += pts;
+      score += pts;
+    } else {
+      wrong.push(q);
+    }
+  });
+  return { score: score, byType: byType, wrong: wrong };
+}
+
+function submit(){
+  var total = S.paper.questions.length;
+  var unanswered = 0;
+  S.paper.questions.forEach(function(q){ if (!isAnswered(q)) unanswered++; });
+  if (unanswered > 0){
+    var okGo = window.confirm('还有 ' + unanswered + ' 道题未作答，未作答按错误计分。确定交卷吗？');
+    if (!okGo) return;
+  }
+  stopTimer();
+  var r = grade();
+  S.submitted = true;
+  S.result = r;
+
+  // 保存成绩
+  var rec = STORE.records[S.id] || { attempts:0, best:0, last:0 };
+  rec.attempts = (rec.attempts || 0) + 1;
+  rec.last = r.score;
+  rec.best = Math.max(rec.best || 0, r.score);
+  rec.at = Date.now();
+  STORE.records[S.id] = rec;
+  delete STORE.progress[S.id];
+  saveStore();
+
+  renderResult(r);
+  showView('result');
+}
+
+function renderResult(r){
+  var score = r.score;
+  var pass = score >= PASS;
+  var secs = S.elapsed;
+  var ringColor = pass ? '#15803d' : '#b42318';
+  var deg = score/100*360;
+
+  el('result-hero').innerHTML =
+    '<div class="ring" style="background:conic-gradient('+ringColor+' '+deg+'deg,#f1ede6 0)">' +
+      '<div class="ring-in"><span style="color:'+ringColor+'">'+score+'</span><small>分</small></div>' +
+    '</div>' +
+    '<div class="verdict '+(pass?'pass':'fail')+'">'+(pass?'及格':'未及格')+'</div>' +
+    '<div class="result-sub">试卷 '+S.paper.id+' · 用时 '+fmtTime(secs)+' · 满分 100（及格 60）</div>';
+
+  var order = ['fill','judge','single','multi'];
+  var bd = '';
+  order.forEach(function(t){
+    var o = r.byType[t];
+    var full = TYPE[t].total * TYPE[t].pts;
+    var pct = full ? (o.pts/full*100) : 0;
+    bd += '<div class="bd-row">' +
+            '<span class="nm">'+TYPE[t].name+'</span>' +
+            '<span class="mini"><i style="width:'+pct+'%"></i></span>' +
+            '<span class="sc">'+o.ok+'/'+o.n+' 题 · '+o.pts+'/'+full+' 分</span>' +
+          '</div>';
+  });
+  el('breakdown').innerHTML = bd;
+
+  el('wrong-title').textContent = r.wrong.length ? ('错题回顾（'+r.wrong.length+' 题）') : '全部答对 🎉';
+
+  var wl = '';
+  r.wrong.forEach(function(q){
+    var a = S.answers[q.no] || {};
+    var opts = '';
+    if (q.type !== 'fill' && q.options){
+      opts = '<div class="wi-opts">';
+      q.options.forEach(function(text, i){
+        var k = letter(i);
+        var isC = String(q.answer).indexOf(k) >= 0;
+        var isP = (a.picked || []).indexOf(k) >= 0;
+        var cls = isC ? 'c' : (isP ? 'w' : '');
+        if (!isC && !isP) return;
+        opts += '<span class="'+cls+'">'+k+'. '+esc(text)+'</span>';
+      });
+      opts += '</div>';
+    }
+    wl += '<div class="wrong-item">' +
+            '<div class="wi-top"><span class="wi-no">第 '+q.no+' 题</span><span>' + TYPE[q.type].name + '</span></div>' +
+            '<div class="wi-stem">'+renderStem(q.stem)+'</div>' + opts +
+            '<div class="wi-ans">' +
+              '<span><span class="lab">你的答案</span><span class="no">'+userText(q, a)+'</span></span>' +
+              '<span><span class="lab">正确答案</span><span class="ok">'+esc(answerText(q))+'</span></span>' +
+            '</div>' +
+          '</div>';
+  });
+  el('wrong-list').innerHTML = wl || '<p class="hint">本套没有错题，继续保持！</p>';
+
+  el('result-actions').innerHTML =
+    '<button class="btn btn-primary btn-lg" id="btn-next-random" style="margin-top:0">🎲 随机下一套</button>' +
+    '<div style="display:flex;gap:10px;margin-top:10px">' +
+      '<button class="btn btn-light" id="btn-again" style="flex:1">重做本套</button>' +
+      '<button class="btn btn-light" id="btn-back" style="flex:1">返回首页</button>' +
+    '</div>';
+
+  el('btn-next-random').onclick = function(){
+    var nextId = pickRandom(S.id);
+    if (!nextId) { toast('全部试卷都刷过了，先重做一套吧'); return; }
+    startPaper(nextId, true);
+  };
+  el('btn-again').onclick = function(){ startPaper(S.id, true); };
+  el('btn-back').onclick = function(){ goHome(); };
+}
+
+function goHome(){
+  stopTimer();
+  if (S && !S.submitted) saveProgress();
+  S = null;
+  renderHome();
+  showView('home');
+}
+
+/* ============ 题卡 ============ */
+function openSheet(){
+  var m = '';
+  S.paper.questions.forEach(function(q, i){
+    var cls = '';
+    if (i === S.idx) cls = 'cur';
+    else if (isAnswered(q)){
+      var a = S.answers[q.no];
+      var ok = q.type === 'fill' ? (a.self !== false) : a.correct;
+      cls = ok ? 'ok' : 'bad';
+    } else cls = 'todo';
+    m += '<button class="'+cls+'" data-jump="'+i+'">'+q.no+'</button>';
+  });
+  el('map').innerHTML = m;
+  el('sheet').hidden = false;
+}
+function closeSheet(){ el('sheet').hidden = true; }
+
+/* ============ 事件绑定 ============ */
+el('btn-random').addEventListener('click', function(){ startPaper(pickRandom()); });
+el('paper-grid').addEventListener('click', function(e){
+  var b = e.target.closest('[data-paper]');
+  if (b) startPaper(b.getAttribute('data-paper'));
+});
+el('btn-reset').addEventListener('click', function(){
+  if (window.confirm('确定清空全部练习记录（含成绩与作答进度）吗？')){
+    STORE = { records:{}, progress:{} };
+    saveStore();
+    renderHome();
+    toast('记录已清空');
+  }
+});
+el('btn-exit').addEventListener('click', function(){
+  if (S && !S.submitted){
+    var answered = countAnswered();
+    if (answered > 0 && !window.confirm('退出后进度会自动保存，下次可继续作答。确定退出吗？')) return;
+  }
+  goHome();
+});
+el('btn-submit').addEventListener('click', function(){
+  if (S && !S.submitted) submit();
+});
+el('btn-prev').addEventListener('click', function(){ go(-1); });
+el('btn-next').addEventListener('click', function(){
+  if (!S) return;
+  if (S.idx === S.paper.questions.length - 1) submit();
+  else go(1);
+});
+el('btn-card').addEventListener('click', openSheet);
+el('sheet').addEventListener('click', function(e){
+  if (e.target.closest('[data-act="close-sheet"]')) { closeSheet(); return; }
+  var j = e.target.closest('[data-jump]');
+  if (j){ S.idx = parseInt(j.getAttribute('data-jump'), 10); closeSheet(); renderQuiz(); }
+});
+el('qcard').addEventListener('click', function(e){
+  var t = e.target.closest('[data-act]');
+  if (!t) return;
+  var act = t.getAttribute('data-act');
+  if (act === 'reveal') revealBlank();
+  else if (act === 'self-ok') setSelf(true);
+  else if (act === 'self-bad') setSelf(false);
+  else if (act === 'pick'){
+    if (t.hasAttribute('data-locked')) return;
+    pickOption(t.getAttribute('data-key'));
+  }
+});
+el('qcard').addEventListener('click', function(e){
+  var c = e.target.closest('#btn-confirm');
+  if (c) confirmMulti();
+});
+
+document.addEventListener('keydown', function(e){
+  if (!S || S.submitted || !el('view-quiz').classList.contains('active')) return;
+  if (el('sheet').hidden === false && e.key === 'Escape'){ closeSheet(); return; }
+  var k = e.key.toUpperCase();
+  var idx = -1;
+  if ('ABCD'.indexOf(k) >= 0 && k.length === 1) idx = 'ABCD'.indexOf(k);
+  else if ('1234'.indexOf(k) >= 0) idx = parseInt(k, 10) - 1;
+  if (idx >= 0){
+    var q = curQ();
+    if (q.type !== 'fill' && q.options && idx < q.options.length){
+      e.preventDefault();
+      pickOption(letter(idx));
+    }
+    return;
+  }
+  if (e.key === 'Enter'){
+    e.preventDefault();
+    var q2 = curQ();
+    var a2 = S.answers[q2.no];
+    if (q2.type === 'multi' && a2 && !a2.judged && a2.picked && a2.picked.length) confirmMulti();
+    else if (e.target && e.target.id === 'btn-confirm') confirmMulti();
+    else go(1);
+    return;
+  }
+  if (e.key === 'ArrowRight'){ e.preventDefault(); go(1); }
+  if (e.key === 'ArrowLeft'){ e.preventDefault(); go(-1); }
+  if (e.key === 'Escape'){ closeSheet(); }
+});
+
+/* ============ 启动 ============ */
+renderHome();
+showView('home');
+</script>
+</body>
+</html>
